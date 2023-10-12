@@ -14,8 +14,10 @@ ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 
-set(bsoncxx_DIR ../mongocxx-3.8-GNU/lib/cmake/bsoncxx-3.8.0)
-set(mongocxx_DIR ../mongocxx-3.8-GNU/lib/cmake/mongocxx-3.8.0)
+
+
+set(bsoncxx_DIR C:/Mongo/mongocxx-3.8/lib/cmake/bsoncxx-3.8.0)
+set(mongocxx_DIR C:/Mongo/mongocxx-3.8/lib/cmake/mongocxx-3.8.0)
 
 
 include_directories("${CMAKE_SOURCE_DIR}")
