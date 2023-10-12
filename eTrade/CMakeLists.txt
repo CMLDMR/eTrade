@@ -30,11 +30,14 @@ add_executable(eTrade
 )
 
 
-add_library(Bootsrap5ThemaKeys SHARED
-    Bootstrap5ThemaKeys.h
-    Bootstrap5ThemaKeys.cpp)
 
-target_link_libraries(eTrade PRIVATE Bootsrap5ThemaKeys)
+add_library(Bootstrap5ThemaKeys
+    Bootstrap5ThemaKeys.h
+    Bootstrap5ThemaKeys.cpp
+    inlinestyle.h
+)
+
+target_link_libraries(eTrade PRIVATE Bootstrap5ThemaKeys)
 
 
 find_package(mongocxx REQUIRED)

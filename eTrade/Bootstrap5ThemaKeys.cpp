@@ -18,7 +18,7 @@ const std::string Bootstrap::Grid::md(const int index)
 
 const std::string Bootstrap::Grid::lg(const int index)
 {
-    return "col-lg-"+std::to_string(index)+" ";
+    return ("col-lg-"+std::to_string(index)+" ");
 }
 
 const std::string Bootstrap::Grid::xl(const int index)
