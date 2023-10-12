@@ -30,7 +30,8 @@ add_executable(eTrade
 )
 
 
-add_library(Bootsrap5ThemaKeys Bootstrap5ThemaKeys.h
+add_library(Bootsrap5ThemaKeys SHARED
+    Bootstrap5ThemaKeys.h
     Bootstrap5ThemaKeys.cpp)
 
 target_link_libraries(eTrade PRIVATE Bootsrap5ThemaKeys)
