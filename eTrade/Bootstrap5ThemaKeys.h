@@ -34,12 +34,12 @@ namespace Utilities {
 
 namespace Display{
 inline const std::string hide_all{"d-none "};
-inline const std::string hide_xs{"d-none"};
-inline const std::string hide_sm{"d-none d-sm-block"};
-inline const std::string hide_md{"d-sm-none d-md-block"};
-inline const std::string hide_lg{"d-md-none d-lg-block"};
-inline const std::string hide_xl{"d-lg-none d-xl-block"};
-inline const std::string hide_xxl{"d-xl-none d-xxl-block"};
+inline const std::string hide_xs{"d-none "};
+inline const std::string hide_sm{"d-none d-sm-block "};
+inline const std::string hide_md{"d-sm-none d-md-block "};
+inline const std::string hide_lg{"d-md-none d-lg-block "};
+inline const std::string hide_xl{"d-lg-none d-xl-block "};
+inline const std::string hide_xxl{"d-xl-none d-xxl-block "};
 }
 }
 
