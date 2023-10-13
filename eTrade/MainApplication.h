@@ -9,6 +9,11 @@
 using namespace Wt;
 
 
+namespace Header {
+class Widget;
+}
+
+
 class MainApplication : public WApplication
 {
 public:

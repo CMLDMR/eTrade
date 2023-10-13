@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.27)
 
 project(eTrade LANGUAGES CXX)
 
@@ -27,6 +27,8 @@ include_directories("${CMAKE_SOURCE_DIR}")
 add_executable(eTrade
   main.cpp
   MainApplication.cpp MainApplication.h
+  Header/Widget.h Header/Widget.cpp
+  Header/MenuBar.h Header/MenuBar.cpp
 )
 
 
