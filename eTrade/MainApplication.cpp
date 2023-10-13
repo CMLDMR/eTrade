@@ -8,6 +8,8 @@
 #include "Bootstrap5ThemaKeys.h"
 #include "Header/Widget.h"
 
+#include <Body/Slider.h>
+
 MainApplication::MainApplication(const WEnvironment &env)
     :WApplication(env)
 {
@@ -21,4 +23,6 @@ void MainApplication::init()
     root()->addStyleClass(Bootstrap::Grid::container_fluid);
 
     root()->addNew<Header::Widget>();
+
+    root()->addNew<Body::Slider>();
 }

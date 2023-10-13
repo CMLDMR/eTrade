@@ -13,6 +13,10 @@ namespace Header {
 class Widget;
 }
 
+namespace Body {
+class Slider;
+}
+
 
 class MainApplication : public WApplication
 {
