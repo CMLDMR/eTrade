@@ -12,6 +12,7 @@ namespace Header {
 
 
 class AddressContainer;
+class MenuBar;
 
 class Widget : public Wt::WContainerWidget
 {
@@ -22,6 +23,7 @@ private:
     void init();
 
     AddressContainer* m_AddressContainer{nullptr};
+    MenuBar* m_MenuBar{nullptr};
 };
 
 

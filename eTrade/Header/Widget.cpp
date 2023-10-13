@@ -1,6 +1,7 @@
 #include "Widget.h"
 #include "Bootstrap5ThemaKeys.h"
 #include "inlinestyle.h"
+#include "MenuBar.h"
 
 #include <memory.h>
 
@@ -21,12 +22,14 @@ Widget::Widget()
 void Widget::init()
 {
     addStyleClass(Bootstrap::Grid::container_fluid);
-    setHeight(100);
     setAttributeValue(Style::style,Style::background::color::color(Style::color::Grey::LightGray));
 
     m_AddressContainer = addNew<AddressContainer>();
     m_AddressContainer->addStyleClass(Bootstrap::Grid::container_fluid);
 
+
+    m_MenuBar = addNew<MenuBar>();
+    m_MenuBar->addStyleClass(Bootstrap::Grid::container_fluid);
 
 }
 
