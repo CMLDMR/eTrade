@@ -23,21 +23,19 @@ set(mongocxx_DIR C:/Mongo/mongocxx-3.8/lib/cmake/mongocxx-3.8.0)
 include_directories("${CMAKE_SOURCE_DIR}")
 
 
+file(GLOB_RECURSE HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+file(GLOB_RECURSE SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
 add_executable(eTrade
-  main.cpp
-  MainApplication.cpp MainApplication.h
+  ${HEADERS}
+  ${SOURCES}
 )
 
 
+add_subdirectory(eTrade)
+add_subdirectory(Boostrap5ThemaKeys)
 
-add_library(Bootstrap5ThemaKeys
-    Bootstrap5ThemaKeys.h
-    Bootstrap5ThemaKeys.cpp
-    inlinestyle.h
-)
-
-target_link_libraries(eTrade PRIVATE Bootstrap5ThemaKeys)
+target_link_libraries(eTrade PRIVATE Boostrap5ThemaKeys)
 
 
 find_package(mongocxx REQUIRED)
