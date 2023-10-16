@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.26)
 
 project(eTrade LANGUAGES CXX)
 
@@ -30,6 +30,8 @@ add_executable(eTrade
   Header/Widget.h Header/Widget.cpp
   Header/MenuBar.h Header/MenuBar.cpp
   Body/Slider.h Body/Slider.cpp
+  Body/Section.h Body/Section.cpp
+  Body/Feature.h Body/Feature.cpp
 )
 
 
