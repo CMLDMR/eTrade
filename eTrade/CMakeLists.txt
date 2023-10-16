@@ -29,6 +29,7 @@ add_executable(eTrade
   MainApplication.cpp MainApplication.h
   Header/Widget.h Header/Widget.cpp
   Header/MenuBar.h Header/MenuBar.cpp
+  Body/Slider.h Body/Slider.cpp
 )
 
 
