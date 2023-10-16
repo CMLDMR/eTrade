@@ -24,5 +24,7 @@ void MainApplication::init()
 
     root()->addNew<Header::Widget>();
 
-    root()->addNew<Body::Slider>();
+    auto slider = root()->addNew<Body::Slider>();
+    slider->addSlide("Test","img/carousel-1.jpg");
+    slider->addSlide("Test2","img/carousel-2.jpg");
 }
