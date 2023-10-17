@@ -9,7 +9,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
+#ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
@@ -41,6 +41,13 @@ add_executable(eTrade
 )
 
 
+add_executable(eTradePanel
+  Qt/main.cpp
+)
+
+
+target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
+
 
 add_library(Bootstrap5ThemaKeys
     Bootstrap5ThemaKeys.h
@@ -56,11 +63,13 @@ find_package(bsoncxx REQUIRED)
 include_directories(${LIBMONGOCXX_INCLUDE_DIR})
 include_directories(${LIBBSONCXX_INCLUDE_DIR})
 
-
-
-
-target_link_libraries(eTrade PRIVATE Qt${QT_VERSION_MAJOR}::Core )
 target_link_libraries(eTrade PRIVATE mongo::bsoncxx_shared mongo::mongocxx_shared)
+
+
+
+target_link_libraries(eTradePanel PRIVATE Qt${QT_VERSION_MAJOR}::Core )
+target_link_libraries(eTradePanel PRIVATE mongo::bsoncxx_shared mongo::mongocxx_shared)
+
 
 set(Wt_DIR C:/Wt-4.10.1-msvs2022-x64/lib/cmake/wt)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "C:/Wt-4.10.1-msvs2022-x64/lib/cmake/wt")
