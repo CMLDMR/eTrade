@@ -9,6 +9,7 @@
 #include "Header/Widget.h"
 
 #include "Body/Body.h"
+#include "Footer/Footer.h"
 
 
 MainApplication::MainApplication(const WEnvironment &env)
@@ -37,4 +38,6 @@ void MainApplication::init()
     auto visitor = root()->addNew<Body::Visitor>();
     auto customer = root()->addNew<Body::CustomerReview>();
     root()->addNew<Body::LatestBlog>();
+    root()->addNew<Footer::Footer>();
+
 }

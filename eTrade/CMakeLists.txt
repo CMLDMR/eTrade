@@ -37,6 +37,7 @@ add_executable(eTrade
   Body/Visitor.h Body/Visitor.cpp
   Body/CustomerReview.h Body/CustomerReview.cpp
   Body/LatestBlog.h Body/LatestBlog.cpp
+  Footer/Footer.h Footer/Footer.cpp
 )
 
 
