@@ -8,8 +8,8 @@
 #include <Wt/WTemplate.h>
 #include <Wt/WLineEdit.h>
 
-#include "Bootstrap5ThemaKeys.h"
-#include "inlinestyle.h"
+#include "Bootstrap/Bootstrap5ThemaKeys.h"
+#include "Bootstrap/inlinestyle.h"
 
 using namespace Wt;
 

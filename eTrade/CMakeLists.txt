@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
 
-project(eTradeSystem LANGUAGES CXX)
+project(eTradeSystem LANGUAGES C CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -8,6 +8,7 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:__cplusplus")
 
 #ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
@@ -21,6 +22,12 @@ set(mongocxx_DIR C:/Mongo/mongocxx-3.8/lib/cmake/mongocxx-3.8.0)
 
 
 include_directories("${CMAKE_SOURCE_DIR}")
+
+add_library(Bootstrap5ThemaKeys
+    Bootstrap/Bootstrap5ThemaKeys.h
+    Bootstrap/Bootstrap5ThemaKeys.cpp
+    Bootstrap/inlinestyle.h
+)
 
 
 
@@ -40,6 +47,7 @@ add_executable(eTrade
   Footer/Footer.h Footer/Footer.cpp
 )
 
+target_link_libraries(eTrade PRIVATE Bootstrap5ThemaKeys)
 target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
 
 
@@ -48,16 +56,6 @@ add_executable(eTradePanel
   Qt/MainWindow.h Qt/MainWindow.cpp Qt/MainWindow.ui
 )
 
-
-
-
-add_library(Bootstrap5ThemaKeys
-    Bootstrap5ThemaKeys.h
-    Bootstrap5ThemaKeys.cpp
-    inlinestyle.h
-)
-
-target_link_libraries(eTrade PRIVATE Bootstrap5ThemaKeys)
 
 
 find_package(mongocxx REQUIRED)

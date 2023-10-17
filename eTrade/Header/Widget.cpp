@@ -1,6 +1,6 @@
 #include "Widget.h"
-#include "Bootstrap5ThemaKeys.h"
-#include "inlinestyle.h"
+#include "Bootstrap/Bootstrap5ThemaKeys.h"
+#include "Bootstrap/inlinestyle.h"
 #include "MenuBar.h"
 
 #include <memory.h>

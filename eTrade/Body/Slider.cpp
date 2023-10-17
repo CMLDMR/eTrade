@@ -2,7 +2,7 @@
 #include "Wt/WCssDecorationStyle.h"
 #include <Wt/WText.h>
 #include <Wt/WVBoxLayout.h>
-#include "inlinestyle.h"
+#include "Bootstrap/inlinestyle.h"
 
 using namespace Wt;
 
