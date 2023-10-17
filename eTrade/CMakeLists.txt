@@ -45,6 +45,7 @@ target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
 
 add_executable(eTradePanel
   Qt/main.cpp
+  Qt/MainWindow.h Qt/MainWindow.cpp Qt/MainWindow.ui
 )
 
 
