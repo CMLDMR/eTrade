@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
 
-project(eTrade LANGUAGES CXX)
+project(eTradeSystem LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -11,8 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets Quick Multimedia Gui)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets Quick Multimedia Gui)
 
 
 
@@ -40,13 +40,14 @@ add_executable(eTrade
   Footer/Footer.h Footer/Footer.cpp
 )
 
+target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
+
 
 add_executable(eTradePanel
   Qt/main.cpp
 )
 
 
-target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
 
 
 add_library(Bootstrap5ThemaKeys
@@ -67,7 +68,10 @@ target_link_libraries(eTrade PRIVATE mongo::bsoncxx_shared mongo::mongocxx_share
 
 
 
-target_link_libraries(eTradePanel PRIVATE Qt${QT_VERSION_MAJOR}::Core )
+target_link_libraries(eTradePanel PRIVATE Qt${QT_VERSION_MAJOR}::Core
+                                          Qt${QT_VERSION_MAJOR}::Gui
+                                          Qt${QT_VERSION_MAJOR}::Widgets
+                                          Qt${QT_VERSION_MAJOR}::Quick)
 target_link_libraries(eTradePanel PRIVATE mongo::bsoncxx_shared mongo::mongocxx_shared)
 
 
