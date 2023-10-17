@@ -32,6 +32,11 @@ add_executable(eTrade
   Body/Slider.h Body/Slider.cpp
   Body/Section.h Body/Section.cpp
   Body/Feature.h Body/Feature.cpp
+  Body/Product.h Body/Product.cpp
+  Body/Body.h
+  Body/Visitor.h Body/Visitor.cpp
+  Body/CustomerReview.h Body/CustomerReview.cpp
+  Body/LatestBlog.h Body/LatestBlog.cpp
 )
 
 
