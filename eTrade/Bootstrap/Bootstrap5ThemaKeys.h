@@ -27,8 +27,25 @@ const BOOTSRAPTHEMEKEYS_EXPORT std::string md( const int index );
 const BOOTSRAPTHEMEKEYS_EXPORT std::string lg( const int index );
 const BOOTSRAPTHEMEKEYS_EXPORT std::string xl( const int index );
 const BOOTSRAPTHEMEKEYS_EXPORT std::string xxl( const int index );
+const BOOTSRAPTHEMEKEYS_EXPORT std::string full( const int index );
 
 }
+
+
+namespace Components {
+namespace Buttons{
+inline const std::string Primary{"btn-primary "};
+inline const std::string Secondary{"btn-secondary "};
+inline const std::string Success{"btn-success "};
+inline const std::string Danger{"btn-danger "};
+inline const std::string Warning{"btn-warning "};
+inline const std::string Info{"btn-info "};
+inline const std::string Light{"btn-light "};
+inline const std::string Dark{"btn-dark "};
+inline const std::string Link{"btn-link "};
+}
+}
+
 
 namespace Utilities {
 

@@ -28,7 +28,7 @@ void Slider::addSlide(const std::string &title, const std::string &backgroundImg
     auto titleText = layout->addWidget(std::make_unique<WText>("<h1>"+title+"</h1>"));
     titleText->setTextAlignment(AlignmentFlag::Center);
     layout->addStretch(1);
-    container->setHeight(450);
+    container->setHeight(650);
 
     insertWidget(0,std::move(container));
 

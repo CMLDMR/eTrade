@@ -30,3 +30,8 @@ const std::string Bootstrap::Grid::xxl(const int index)
 {
     return "col-xxl-"+std::to_string(index)+" ";
 }
+
+const std::string Bootstrap::Grid::full(const int index)
+{
+    return xxl(index)+xl(index)+lg(index)+md(index)+sm(index)+xs(index);
+}
