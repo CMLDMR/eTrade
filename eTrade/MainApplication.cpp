@@ -5,7 +5,7 @@
 #include <Wt/WBootstrap5Theme.h>
 #include <Wt/WPushButton.h>
 
-#include "Bootstrap5ThemaKeys.h"
+#include "Bootstrap/Bootstrap5ThemaKeys.h"
 #include "Header/Widget.h"
 
 #include "Body/Body.h"

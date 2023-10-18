@@ -3,6 +3,7 @@
 
 #include <string_view>
 #include <string>
+#include "Bootstrap/BootstrapThemaKeys_global.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4251) // disable warning 4345
@@ -12,7 +13,6 @@
 
 namespace Bootstrap{
 
-
 namespace Grid {
 
 inline const std::string container{"container "};
@@ -21,12 +21,12 @@ inline const std::string container_fluid{"container-fluid "};
 inline const std::string row{"row "};
 inline const std::string col{"col "};
 
-const std::string xs( const int index );
-const std::string sm( const int index );
-const std::string md( const int index );
-const std::string lg( const int index );
-const std::string xl( const int index );
-const std::string xxl( const int index );
+const BOOTSRAPTHEMEKEYS_EXPORT std::string xs( const int index );
+const BOOTSRAPTHEMEKEYS_EXPORT std::string sm( const int index );
+const BOOTSRAPTHEMEKEYS_EXPORT std::string md( const int index );
+const BOOTSRAPTHEMEKEYS_EXPORT std::string lg( const int index );
+const BOOTSRAPTHEMEKEYS_EXPORT std::string xl( const int index );
+const BOOTSRAPTHEMEKEYS_EXPORT std::string xxl( const int index );
 
 }
 
