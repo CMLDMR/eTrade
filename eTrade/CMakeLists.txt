@@ -23,13 +23,13 @@ set(mongocxx_DIR C:/Mongo/mongocxx-3.8/lib/cmake/mongocxx-3.8.0)
 
 include_directories("${CMAKE_SOURCE_DIR}")
 
-add_library(Bootstrap5ThemaKeys SHARED
+add_library(Bootstrap5ThemeKeys SHARED
     Bootstrap/Bootstrap5ThemaKeys.h
     Bootstrap/Bootstrap5ThemaKeys.cpp
     Bootstrap/inlinestyle.h
     Bootstrap/BootstrapThemaKeys_global.h
 )
-target_compile_definitions(Bootstrap5ThemaKeys PRIVATE BOOTSRAPTHEMEKEYS_LIBRARY)
+target_compile_definitions(Bootstrap5ThemeKeys PRIVATE BOOTSRAPTHEMEKEYS_LIBRARY)
 
 
 
@@ -50,35 +50,31 @@ find_package(mongocxx REQUIRED)
 find_package(bsoncxx REQUIRED)
 include_directories(${LIBMONGOCXX_INCLUDE_DIR})
 include_directories(${LIBBSONCXX_INCLUDE_DIR})
-
 target_include_directories(MongoCore PUBLIC "C:/Mongo/mongocxx-3.8/include")
-
 target_link_directories(MongoCore PUBLIC "C:/Mongo/mongocxx-3.8/lib")
-
 target_link_libraries(MongoCore PRIVATE mongo::bsoncxx_shared mongo::mongocxx_shared)
-
 target_compile_definitions(MongoCore PRIVATE MONGOCORE_LIBRARY)
 
 
 
 
 add_executable(eTrade
-  Wt/main.cpp
-  Wt/MainApplication.cpp Wt/MainApplication.h
-  Wt/Header/Widget.h Wt/Header/Widget.cpp
-  Wt/Header/MenuBar.h Wt/Header/MenuBar.cpp
-  Wt/Body/Slider.h Wt/Body/Slider.cpp
-  Wt/Body/Section.h Wt/Body/Section.cpp
-  Wt/Body/Feature.h Wt/Body/Feature.cpp
-  Wt/Body/Product.h Wt/Body/Product.cpp
-  Wt/Body/Body.h
-  Wt/Body/Visitor.h Wt/Body/Visitor.cpp
-  Wt/Body/CustomerReview.h Wt/Body/CustomerReview.cpp
-  Wt/Body/LatestBlog.h Wt/Body/LatestBlog.cpp
-  Wt/Footer/Footer.h Wt/Footer/Footer.cpp
+    Wt/main.cpp
+    Wt/MainApplication.cpp Wt/MainApplication.h
+    Wt/Header/Widget.h Wt/Header/Widget.cpp
+    Wt/Header/MenuBar.h Wt/Header/MenuBar.cpp
+    Wt/Body/Slider.h Wt/Body/Slider.cpp
+    Wt/Body/Section.h Wt/Body/Section.cpp
+    Wt/Body/Feature.h Wt/Body/Feature.cpp
+    Wt/Body/Product.h Wt/Body/Product.cpp
+    Wt/Body/Body.h
+    Wt/Body/Visitor.h Wt/Body/Visitor.cpp
+    Wt/Body/CustomerReview.h Wt/Body/CustomerReview.cpp
+    Wt/Body/LatestBlog.h Wt/Body/LatestBlog.cpp
+    Wt/Footer/Footer.h Wt/Footer/Footer.cpp
 )
 
-target_link_libraries(eTrade PRIVATE Bootstrap5ThemaKeys)
+target_link_libraries(eTrade PRIVATE Bootstrap5ThemeKeys)
 target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
 
 
