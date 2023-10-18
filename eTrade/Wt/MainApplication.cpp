@@ -35,9 +35,10 @@ void MainApplication::init()
     auto section = root()->addNew<Body::Section>();
     auto feature = root()->addNew<Body::Feature>();
     auto product = root()->addNew<Body::Product>();
-    auto visitor = root()->addNew<Body::Visitor>();
-    auto customer = root()->addNew<Body::CustomerReview>();
-    root()->addNew<Body::LatestBlog>();
+    //TODO: Daha sonra bakilacak
+//    auto visitor = root()->addNew<Body::Visitor>();
+//    auto customer = root()->addNew<Body::CustomerReview>();
+//    root()->addNew<Body::LatestBlog>();
     root()->addNew<Footer::Footer>();
 
 }

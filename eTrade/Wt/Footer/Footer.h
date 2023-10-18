@@ -10,6 +10,16 @@ class Footer : public Wt::WContainerWidget
 {
 public:
     Footer();
+
+private:
+    void init();
+
+    void initLogoSocial();
+    void initAddress();
+    void quickLinks();
+    void NewsLetter();
+
+    Wt::WContainerWidget* m_Content{nullptr};
 };
 
 } // namespace Footer
