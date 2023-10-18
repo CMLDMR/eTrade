@@ -63,19 +63,19 @@ target_compile_definitions(MongoCore PRIVATE MONGOCORE_LIBRARY)
 
 
 add_executable(eTrade
-  main.cpp
-  MainApplication.cpp MainApplication.h
-  Header/Widget.h Header/Widget.cpp
-  Header/MenuBar.h Header/MenuBar.cpp
-  Body/Slider.h Body/Slider.cpp
-  Body/Section.h Body/Section.cpp
-  Body/Feature.h Body/Feature.cpp
-  Body/Product.h Body/Product.cpp
-  Body/Body.h
-  Body/Visitor.h Body/Visitor.cpp
-  Body/CustomerReview.h Body/CustomerReview.cpp
-  Body/LatestBlog.h Body/LatestBlog.cpp
-  Footer/Footer.h Footer/Footer.cpp
+  Wt/main.cpp
+  Wt/MainApplication.cpp Wt/MainApplication.h
+  Wt/Header/Widget.h Wt/Header/Widget.cpp
+  Wt/Header/MenuBar.h Wt/Header/MenuBar.cpp
+  Wt/Body/Slider.h Wt/Body/Slider.cpp
+  Wt/Body/Section.h Wt/Body/Section.cpp
+  Wt/Body/Feature.h Wt/Body/Feature.cpp
+  Wt/Body/Product.h Wt/Body/Product.cpp
+  Wt/Body/Body.h
+  Wt/Body/Visitor.h Wt/Body/Visitor.cpp
+  Wt/Body/CustomerReview.h Wt/Body/CustomerReview.cpp
+  Wt/Body/LatestBlog.h Wt/Body/LatestBlog.cpp
+  Wt/Footer/Footer.h Wt/Footer/Footer.cpp
 )
 
 target_link_libraries(eTrade PRIVATE Bootstrap5ThemaKeys)
