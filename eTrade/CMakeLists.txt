@@ -33,6 +33,15 @@ target_compile_definitions(Bootstrap5ThemeKeys PRIVATE BOOTSRAPTHEMEKEYS_LIBRARY
 
 
 
+add_library(eCore SHARED
+    Core/Core_global.h
+    Core/Language.h Core/Language.cpp
+    Core/Text.h Core/Text.cpp
+)
+target_compile_definitions(eCore PRIVATE ECORE_LIBRARY)
+
+
+
 
 add_library(MongoCore SHARED
     MongoCore/db.h
@@ -72,6 +81,7 @@ add_executable(eTrade
     Wt/Body/CustomerReview.h Wt/Body/CustomerReview.cpp
     Wt/Body/LatestBlog.h Wt/Body/LatestBlog.cpp
     Wt/Footer/Footer.h Wt/Footer/Footer.cpp
+    Wt/Widget/Text.h Wt/Widget/Text.cpp
 )
 
 target_link_libraries(eTrade PRIVATE Bootstrap5ThemeKeys)

@@ -74,6 +74,7 @@ void Product::initHeader()
     moreProductContainer->addStyleClass(Bootstrap::Grid::container_fluid);
     moreProductContainer->setContentAlignment(AlignmentFlag::Center);
     auto moreProductBtn = moreProductContainer->addNew<WPushButton>("Browse More Product");
+    moreProductBtn->setMargin(25,Side::Top);
 
 
 }
