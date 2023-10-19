@@ -36,6 +36,7 @@ target_compile_definitions(Bootstrap5ThemeKeys PRIVATE BOOTSRAPTHEMEKEYS_LIBRARY
 add_library(eCore SHARED
     Core/Core_global.h
     Core/Language.h Core/Language.cpp
+    Core/Text.h Core/Text.cpp
 )
 target_compile_definitions(eCore PRIVATE ECORE_LIBRARY)
 

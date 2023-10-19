@@ -1,5 +1,6 @@
 #include "Footer.h"
 #include "Bootstrap/Bootstrap5ThemaKeys.h"
+#include "Bootstrap/inlinestyle.h"
 
 #include <Wt/WCssDecorationStyle.h>
 #include <Wt/WHBoxLayout.h>
@@ -18,6 +19,8 @@ Footer::Footer()
 
 void Footer::init()
 {
+    decorationStyle().setBackgroundColor(WColor(StandardColor::DarkGray));
+    setPadding(50,Side::Top|Side::Bottom);
     setContentAlignment(AlignmentFlag::Center);
     m_Content = addNew<WContainerWidget>();
     m_Content->addStyleClass(Bootstrap::Grid::row);
@@ -38,7 +41,9 @@ void Footer::initLogoSocial()
                              Bootstrap::Grid::md(3)+
                              Bootstrap::Grid::sm(6)+
                              Bootstrap::Grid::xs(6));
-    container->decorationStyle().setBackgroundColor(WColor(StandardColor::LightGray));
+//    container->decorationStyle().setBackgroundColor(WColor(StandardColor::LightGray));
+    container->setAttributeValue(Style::style,Style::Border::right::border("solid white 1px")+Style::Border::left::border("solid white 1px"));
+//    container->setAttributeValue(Style::style,Style::Border::left::border("solid white 1px"));
 
 
     auto vLayout = container->setLayout(std::make_unique<WVBoxLayout>());
@@ -66,6 +71,7 @@ void Footer::initAddress()
                              Bootstrap::Grid::md(3)+
                              Bootstrap::Grid::sm(6)+
                              Bootstrap::Grid::xs(6));
+    container->setAttributeValue(Style::style,Style::Border::right::border("solid white 1px"));
 
 
     auto vLayout = container->setLayout(std::make_unique<WVBoxLayout>());
@@ -86,7 +92,8 @@ void Footer::quickLinks()
                              Bootstrap::Grid::md(3)+
                              Bootstrap::Grid::sm(6)+
                              Bootstrap::Grid::xs(6));
-    container->decorationStyle().setBackgroundColor(WColor(StandardColor::LightGray));
+//    container->decorationStyle().setBackgroundColor(WColor(StandardColor::LightGray));
+    container->setAttributeValue(Style::style,Style::Border::right::border("solid white 1px"));
 
 
     auto vLayout = container->setLayout(std::make_unique<WVBoxLayout>());
@@ -95,7 +102,7 @@ void Footer::quickLinks()
     vLayout->addWidget(std::make_unique<WText>("<h5>About Us</h5>"));
     vLayout->addWidget(std::make_unique<WText>("<h5>Contact Us</h5>"));
     vLayout->addWidget(std::make_unique<WText>("<h5>Our Services</h5>"));
-    vLayout->addWidget(std::make_unique<WText>("<h5>Terms & Condition</h5>"));
+    vLayout->addWidget(std::make_unique<WText>("<h5>Terms - Condition</h5>"));
     vLayout->addWidget(std::make_unique<WText>("<h5>Support</h5>"));
 }
 
@@ -108,6 +115,7 @@ void Footer::NewsLetter()
                              Bootstrap::Grid::md(3)+
                              Bootstrap::Grid::sm(6)+
                              Bootstrap::Grid::xs(6));
+    container->setAttributeValue(Style::style,Style::Border::right::border("solid white 1px"));
 
 
     auto vLayout = container->setLayout(std::make_unique<WVBoxLayout>());
