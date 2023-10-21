@@ -3,17 +3,23 @@
 
 #include <Wt/WContainerWidget.h>
 
-#include "Login.h"
+#include "Core/User.h"
 
 namespace Account {
+
+class Login;
 
 class Panel : public Wt::WContainerWidget
 {
 public:
-    Panel();
+    Panel(MongoCore::DB* mdb);
 
 private:
     void init();
+
+    MongoCore::DB* m_db;
+
+    eCore::User::UserItem* m_userItem;
 };
 
 } // namespace Account

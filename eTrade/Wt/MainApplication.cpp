@@ -12,10 +12,21 @@
 #include "Footer/Footer.h"
 #include "Wt/Account/Panel.h"
 
+#include <mongocxx/exception/exception.hpp>
+
+#include "../../../_url.h"
+
 
 MainApplication::MainApplication(const WEnvironment &env)
     :WApplication(env)
 {
+
+    m_client = new mongocxx::client(mongocxx::uri(_url));
+
+    m_dbmongocxx = m_client->database(_db);
+
+    m_db = new MongoCore::DB(&m_dbmongocxx);
+
     init();
 }
 
@@ -28,11 +39,11 @@ void MainApplication::init()
     auto m_headerContainer = root()->addNew<Header::Widget>();
 
 
-    auto body = root()->addNew<Body::Body>();
+    auto body = root()->addNew<Body::Body>(m_db);
 
     m_headerContainer->clickAccount().connect([=](){
         body->clear();
-        body->addNew<Account::Panel>();
+        body->addNew<Account::Panel>(m_db);
     });
 
 

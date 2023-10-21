@@ -3,12 +3,17 @@
 
 #include <Wt/WContainerWidget.h>
 
+#include <Core/User.h>
+
 namespace Account {
 
-class Admin : public Wt::WContainerWidget
+class Admin : public Wt::WContainerWidget, public eCore::User::UserItem
 {
 public:
-    Admin();
+    Admin(eCore::User::UserItem* mUser);
+
+private:
+    void init();
 };
 
 } // namespace Account

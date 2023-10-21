@@ -50,9 +50,9 @@ void Product::initHeader()
     auto fruitsBtn = hLayout->addWidget(std::make_unique<WPushButton>("Fruits"));
     auto freshBtn = hLayout->addWidget(std::make_unique<WPushButton>("Fresh"));
 
-    vegetableBtn->addStyleClass(Bootstrap::Components::Buttons::Success);
-    fruitsBtn->addStyleClass(Bootstrap::Components::Buttons::Success);
-    freshBtn->addStyleClass(Bootstrap::Components::Buttons::Success);
+    vegetableBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
+    fruitsBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
+    freshBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
 
 
     m_ProductContainer = addNew<WContainerWidget>();
