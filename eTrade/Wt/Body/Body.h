@@ -10,4 +10,17 @@
 #include "Wt/Body/LatestBlog.h"
 #include "Wt/Body/LatestBlog.h"
 
+
+
+namespace Body {
+
+class Body : public Wt::WContainerWidget
+{
+public:
+    Body();
+};
+
+
+}
+
 #endif // BODY_H

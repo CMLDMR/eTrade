@@ -2,7 +2,10 @@
 
 namespace Widget {
 
-Text::Text()
+
+
+Text::Text(const eCore::Text &text)
+    :Wt::WText(text.text())
 {
 
 }

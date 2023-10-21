@@ -76,15 +76,20 @@ add_executable(eTrade
     Wt/Body/Section.h Wt/Body/Section.cpp
     Wt/Body/Feature.h Wt/Body/Feature.cpp
     Wt/Body/Product.h Wt/Body/Product.cpp
-    Wt/Body/Body.h
+    Wt/Body/Body.h Wt/Body/Body.cpp
     Wt/Body/Visitor.h Wt/Body/Visitor.cpp
     Wt/Body/CustomerReview.h Wt/Body/CustomerReview.cpp
     Wt/Body/LatestBlog.h Wt/Body/LatestBlog.cpp
     Wt/Footer/Footer.h Wt/Footer/Footer.cpp
     Wt/Widget/Text.h Wt/Widget/Text.cpp
+    Wt/Account/Admin.h Wt/Account/Admin.cpp
+    Wt/Account/Login.h Wt/Account/Login.cpp
+
 )
 
 target_link_libraries(eTrade PRIVATE Bootstrap5ThemeKeys)
+target_link_libraries(eTrade PRIVATE eCore)
+
 target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
 
 

@@ -57,8 +57,19 @@ void MenuBar::init()
     separator->setMargin(15,Side::Left|Side::Right);
 
     m_Layout->addWidget(std::move(fMenu("Search")));
-    m_Layout->addWidget(std::move(fMenu("Account")));
+
+
+    auto accoutContainer = fMenu("Account");
+    m_accoutContainer = accoutContainer.get();
+    m_Layout->addWidget(std::move(accoutContainer));
+
+
     m_Layout->addWidget(std::move(fMenu("Orders")));
+}
+
+Wt::WContainerWidget *MenuBar::accoutContainer() const
+{
+    return m_accoutContainer;
 }
 
 } // namespace Header
