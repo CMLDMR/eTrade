@@ -15,10 +15,14 @@ public:
     MenuBar();
 
 
+    Wt::WContainerWidget *accoutContainer() const;
+
 private:
     void init();
     Wt::WHBoxLayout* m_Layout;
     Wt::WContainerWidget* m_LogoContainer;
+
+    Wt::WContainerWidget* m_accoutContainer;
 };
 
 } // namespace Header

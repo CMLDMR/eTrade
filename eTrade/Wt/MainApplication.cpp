@@ -10,6 +10,7 @@
 
 #include "Body/Body.h"
 #include "Footer/Footer.h"
+#include "Wt/Account/Panel.h"
 
 
 MainApplication::MainApplication(const WEnvironment &env)
@@ -24,21 +25,17 @@ void MainApplication::init()
     Wt::WApplication::instance()->setTheme(m_wtTheme);
     root()->addStyleClass(Bootstrap::Grid::container_fluid);
 
-    root()->addNew<Header::Widget>();
+    auto m_headerContainer = root()->addNew<Header::Widget>();
 
 
+    auto body = root()->addNew<Body::Body>();
 
-    auto slider = root()->addNew<Body::Slider>();
-    slider->addSlide("Natural Food Is Always Healthy","img/carousel-1.jpg");
-    slider->addSlide("Natural Food Is Always Healthy","img/carousel-2.jpg");
+    m_headerContainer->clickAccount().connect([=](){
+        body->clear();
+        body->addNew<Account::Panel>();
+    });
 
-    auto section = root()->addNew<Body::Section>();
-    auto feature = root()->addNew<Body::Feature>();
-    auto product = root()->addNew<Body::Product>();
-    //TODO: Daha sonra bakilacak
-//    auto visitor = root()->addNew<Body::Visitor>();
-//    auto customer = root()->addNew<Body::CustomerReview>();
-//    root()->addNew<Body::LatestBlog>();
+
     root()->addNew<Footer::Footer>();
 
 }

@@ -11,6 +11,11 @@ namespace Body {
 Slider::Slider()
 {
     init();
+
+    //TODO: remove test code
+
+    addSlide("Natural Food Is Always Healthy","img/carousel-1.jpg");
+    addSlide("Natural Food Is Always Healthy","img/carousel-2.jpg");
 }
 
 void Slider::addSlide(const std::string &title, const std::string &backgroundImg)

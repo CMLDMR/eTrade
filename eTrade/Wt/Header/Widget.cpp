@@ -19,6 +19,11 @@ Widget::Widget()
 
 }
 
+Wt::Signal<NoClass> &Widget::clickAccount()
+{
+    return m_clickAccount;
+}
+
 void Widget::init()
 {
     addStyleClass(Bootstrap::Grid::container_fluid);
@@ -31,13 +36,17 @@ void Widget::init()
     m_MenuBar = addNew<MenuBar>();
     m_MenuBar->addStyleClass(Bootstrap::Grid::container_fluid);
 
+    m_MenuBar->accoutContainer()->clicked().connect([=](){
+        m_clickAccount.emit(NoClass());
+    });
+
 }
+
+
 
 AddressContainer::AddressContainer()
 {
-
     init();
-
 }
 
 void AddressContainer::init()
