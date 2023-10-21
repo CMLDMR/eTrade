@@ -8,15 +8,16 @@
 #include <Wt/WLineEdit.h>
 #include <Wt/WPushButton.h>
 
+
+
 using namespace Wt;
 
 namespace Account {
 
-Login::Login()
+Login::Login(eCore::User::UserItem* mUser)
+    :m_User(mUser)
 {
-
     init();
-
 }
 
 Wt::Signal<NoClass> &Login::successLogin()
@@ -42,7 +43,7 @@ void Login::init()
     auto userNameTextContainer = gLayout->addWidget(std::make_unique<WContainerWidget>(),0,0);
     userNameTextContainer->setContentAlignment(AlignmentFlag::Right);
     userNameTextContainer->setPadding(5,Side::Top|Side::Bottom);
-    auto userNameInputText = userNameTextContainer->addWidget(std::make_unique<Widget::Text>("<b>Kullanıcı Adı</b>"));
+    userNameTextContainer->addWidget(std::make_unique<Widget::Text>("<b>Kullanıcı Adı</b>"));
 
 
     auto userNameInputContainer = gLayout->addWidget(std::make_unique<WContainerWidget>(),0,1);
@@ -53,7 +54,7 @@ void Login::init()
     auto userNamePasswordContainer = gLayout->addWidget(std::make_unique<WContainerWidget>(),1,0);
     userNamePasswordContainer->setContentAlignment(AlignmentFlag::Right);
     userNamePasswordContainer->setPadding(5,Side::Top|Side::Bottom);
-    auto userNamePasswordInput = userNamePasswordContainer->addWidget(std::make_unique<Widget::Text>("<b>Şifre</b>"));
+    userNamePasswordContainer->addWidget(std::make_unique<Widget::Text>("<b>Şifre</b>"));
 
 
     auto userPasswordInputContainer = gLayout->addWidget(std::make_unique<WContainerWidget>(),1,1);
@@ -68,9 +69,28 @@ void Login::init()
 
 
     loginBtn->clicked().connect([=](){
-        m_Success.emit(NoClass());
+        this->checkUser(userNameInput->text().toUTF8(),userPasswordInput->text().toUTF8());
     });
 
+
+}
+
+void Login::checkUser(const std::string &username, const std::string &password)
+{
+    eCore::User::UserItem item(m_User->db());
+    item.append(eCore::User::Key::username,username);
+    item.append(eCore::User::Key::password,password);
+
+    auto val = m_User->db()->findOneItem(item);
+
+    if( val ) {
+        m_User->setDocumentView(val->view());
+        m_Success.emit(NoClass());
+    }
+    else{
+        //TODO: Login Failed Message
+        std::cout << "Failed" << std::endl;
+    }
 
 }
 

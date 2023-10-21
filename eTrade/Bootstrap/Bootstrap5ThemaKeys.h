@@ -34,6 +34,8 @@ const BOOTSRAPTHEMEKEYS_EXPORT std::string full( const int index );
 
 namespace Components {
 namespace Buttons{
+
+namespace Normal{
 inline const std::string Primary{"btn-primary "};
 inline const std::string Secondary{"btn-secondary "};
 inline const std::string Success{"btn-success "};
@@ -43,6 +45,25 @@ inline const std::string Info{"btn-info "};
 inline const std::string Light{"btn-light "};
 inline const std::string Dark{"btn-dark "};
 inline const std::string Link{"btn-link "};
+}
+
+namespace Outline{
+inline const std::string Primary{"btn-outline-primary "};
+inline const std::string Secondary{"btn-outline-secondary "};
+inline const std::string Success{"btn-outline-success "};
+inline const std::string Danger{"btn-outline-danger "};
+inline const std::string Warning{"btn-outline-warning "};
+inline const std::string Info{"btn-outline-info "};
+inline const std::string Light{"btn-outline-light "};
+inline const std::string Dark{"btn-outline-dark "};
+inline const std::string Link{"btn-outline-link "};
+}
+
+namespace Size{
+inline const std::string Large{"btn-lg "};
+inline const std::string Small{"btn-sm "};
+}
+
 }
 }
 

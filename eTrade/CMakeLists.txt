@@ -37,6 +37,7 @@ add_library(eCore SHARED
     Core/Core_global.h
     Core/Language.h Core/Language.cpp
     Core/Text.h Core/Text.cpp
+    Core/User.h Core/User.cpp
 )
 target_compile_definitions(eCore PRIVATE ECORE_LIBRARY)
 
@@ -85,13 +86,21 @@ add_executable(eTrade
     Wt/Account/Admin.h Wt/Account/Admin.cpp
     Wt/Account/Login.h Wt/Account/Login.cpp
     Wt/Account/Panel.h Wt/Account/Panel.cpp
-
 )
+
+target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
+
+
 
 target_link_libraries(eTrade PRIVATE Bootstrap5ThemeKeys)
 target_link_libraries(eTrade PRIVATE eCore)
+target_link_libraries(eTrade PRIVATE MongoCore)
+target_link_libraries(eCore PRIVATE MongoCore)
+target_link_libraries(eTrade PRIVATE mongo::bsoncxx_shared mongo::mongocxx_shared)
+target_link_libraries(eCore PRIVATE mongo::bsoncxx_shared mongo::mongocxx_shared)
 
-target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
+
+
 
 
 add_executable(eTradePanel
@@ -103,7 +112,10 @@ add_executable(eTradePanel
 
 
 
-target_link_libraries(eTrade PRIVATE mongo::bsoncxx_shared mongo::mongocxx_shared)
+
+
+
+
 
 
 

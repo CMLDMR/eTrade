@@ -1,8 +1,17 @@
 #include "Body.h"
 
+#include <Wt/Body/Slider.h>
+#include <Wt/Body/Section.h>
+#include "Wt/Body/Feature.h"
+#include "Wt/Body/Product.h"
+//#include "Wt/Body/Visitor.h"
+//#include "Wt/Body/CustomerReview.h"
+//#include "Wt/Body/LatestBlog.h"
+
+
 using namespace Wt;
 
-Body::Body::Body()
+Body::Body::Body(MongoCore::DB* _db)
 {
 
 
