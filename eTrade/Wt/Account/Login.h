@@ -10,8 +10,12 @@ class Login : public Wt::WContainerWidget
 public:
     Login();
 
+
+    Wt::Signal<Wt::NoClass> &successLogin();
 private:
     void init();
+
+    Wt::Signal<Wt::NoClass> m_Success;
 };
 
 } // namespace Account

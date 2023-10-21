@@ -84,6 +84,7 @@ add_executable(eTrade
     Wt/Widget/Text.h Wt/Widget/Text.cpp
     Wt/Account/Admin.h Wt/Account/Admin.cpp
     Wt/Account/Login.h Wt/Account/Login.cpp
+    Wt/Account/Panel.h Wt/Account/Panel.cpp
 
 )
 

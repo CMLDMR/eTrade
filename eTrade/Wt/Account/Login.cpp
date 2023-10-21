@@ -19,6 +19,11 @@ Login::Login()
 
 }
 
+Wt::Signal<NoClass> &Login::successLogin()
+{
+    return m_Success;
+}
+
 void Login::init()
 {
     setMargin(150,Side::Top|Side::Bottom);
@@ -57,7 +62,15 @@ void Login::init()
 
 
     auto loginBtn = gLayout->addWidget(std::make_unique<WPushButton>("Giriş"),2,0);
+
+    //TODO: implement Forget password
     auto lostBtn = gLayout->addWidget(std::make_unique<WPushButton>("Şifremi Unuttum"),2,1);
+
+
+    loginBtn->clicked().connect([=](){
+        m_Success.emit(NoClass());
+    });
+
 
 }
 
