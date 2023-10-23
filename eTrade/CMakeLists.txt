@@ -38,6 +38,7 @@ add_library(eCore SHARED
     Core/Language.h Core/Language.cpp
     Core/Text.h Core/Text.cpp
     Core/User.h Core/User.cpp
+    Core/Manager.h Core/Manager.cpp
 )
 target_compile_definitions(eCore PRIVATE ECORE_LIBRARY)
 
@@ -86,6 +87,11 @@ add_executable(eTrade
     Wt/Account/Admin.h Wt/Account/Admin.cpp
     Wt/Account/Login.h Wt/Account/Login.cpp
     Wt/Account/Panel.h Wt/Account/Panel.cpp
+    Wt/Account/HeaderInfo.h Wt/Account/HeaderInfo.cpp
+    Wt/Account/UserManager.h Wt/Account/UserManager.cpp
+    Wt/Widget/ContainerWidget.h Wt/Widget/ContainerWidget.cpp
+
+
 )
 
 target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)

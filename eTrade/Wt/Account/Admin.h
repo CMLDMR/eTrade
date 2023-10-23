@@ -3,6 +3,7 @@
 
 #include <Wt/WContainerWidget.h>
 
+#include <Core/Text.h>
 #include <Core/User.h>
 
 namespace Account {
@@ -14,6 +15,15 @@ public:
 
 private:
     void init();
+
+    std::unique_ptr<Wt::WPushButton> createMenuButton( const eCore::Text &btnName );
+
+
+    Wt::WContainerWidget* m_headerContainer;
+    Wt::WContainerWidget* m_contentContainer;
+
+    void initUsers();
+    void initHeaderInfo();
 };
 
 } // namespace Account

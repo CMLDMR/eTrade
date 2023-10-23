@@ -35,6 +35,8 @@ const BOOTSRAPTHEMEKEYS_EXPORT std::string full( const int index );
 namespace Components {
 namespace Buttons{
 
+inline const std::string group{"btn-group "};
+
 namespace Normal{
 inline const std::string Primary{"btn-primary "};
 inline const std::string Secondary{"btn-secondary "};
