@@ -21,7 +21,8 @@ inline const std::string type{"type"};
 class ECORE_EXPORT UserItem : public MongoCore::Item
 {
 public:
-    UserItem(MongoCore::DB *mdb);
+    UserItem();
+    explicit UserItem(MongoCore::DB *mdb);
     UserItem(UserItem *mUser);
 
     enum class UserType{
@@ -30,6 +31,12 @@ public:
         Client,
         Unknown = 99
     };
+
+    UserItem &setType( const UserType type );
+    UserItem &setUserName( const std::string &userName );
+    UserItem &setUserPassword( const std::string &userPassword );
+
+    std::string getUserName() const;
 
     UserType getType() const;
 

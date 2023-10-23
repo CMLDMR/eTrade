@@ -2,10 +2,10 @@
 
 namespace eCore {
 
-Text::Text()
-{
+//Text::Text()
+//{
 
-}
+//}
 
 Text::Text(const Text &other)
     :m_text(other.m_text)
@@ -37,10 +37,22 @@ std::string Text::text() const
     return m_text;
 }
 
+std::string Text::operator()()
+{
+    return text();
+}
+
 Text Text::operator=(const std::string &str)
 {
     m_text = str;
     return *this;
 }
 
+const std::string tr(const std::string &str)
+{
+    return eCore::Text(str).text();
+}
+
 } // namespace eCore
+
+

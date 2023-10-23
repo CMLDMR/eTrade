@@ -5,12 +5,18 @@
 
 #include <string>
 
+//#define TR(x)   eCore::Text(x).text()
+
+
+
 namespace eCore {
+
+const ECORE_EXPORT std::string  tr( const std::string &str );
 
 class ECORE_EXPORT Text
 {
 public:
-    Text();
+//    Text();
     Text( const Text &other );
 
     Text( const std::string &str );
@@ -20,6 +26,7 @@ public:
     Text operator=( const std::string &str );
 
     std::string text() const;
+    std::string operator()();
 
 
 
