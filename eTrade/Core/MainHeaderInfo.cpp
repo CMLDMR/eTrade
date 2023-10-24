@@ -61,11 +61,6 @@ MainHeaderInfoManager::MainHeaderInfoManager(MongoCore::DB *mDB)
 
 }
 
-//template<typename T>
-//void MainHeaderInfo::setValue(const Key key, const T &value)
-//{
-//    append(magic_enum::enum_name(key).data(),value);
-//}
 
 } // namespace HeaderInfo
 

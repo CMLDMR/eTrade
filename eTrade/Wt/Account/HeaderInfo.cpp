@@ -3,9 +3,11 @@
 #include <Wt/WGridLayout.h>
 #include <Wt/WLineEdit.h>
 #include <Wt/WText.h>
+#include <Wt/WPushButton.h>
+
 #include "Bootstrap/Bootstrap5ThemaKeys.h"
+#include "Bootstrap/inlinestyle.h"
 #include "Core/Text.h"
-#include "Wt/WPushButton.h"
 
 using namespace eCore::HeaderInfo;
 
@@ -29,15 +31,14 @@ void Account::HeaderInfo::errorOccured(const std::string &errorText)
 
 void Account::HeaderInfo::onList(const std::vector<eCore::HeaderInfo::MainHeaderInfo> &mlist)
 {
-
     for( const auto &item : mlist ) {
         if( item.valueType() == MainHeaderInfo::DefinationKey::address ){
             if( m_adresLineEdit ) {
                 m_adresLineEdit->setText(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data());
+                m_adresLineEdit->setAttributeValue(Style::dataoid,item.oid().value().to_string());
             }
         }
     }
-
 }
 
 void Account::HeaderInfo::init()
@@ -57,16 +58,22 @@ void Account::HeaderInfo::init()
 
     adresDegisBtn->clicked().connect([=](){
         MainHeaderInfo infoItem;
-        infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::address);
-        infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
+
         auto count = countItem(infoItem);
         if( count == 0 ) {
+            infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::address);
+            infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
             auto ins = InsertItem(infoItem);
             if( ins.size() ) {
-
+                //TODO: updated information appearing must implement
             }
         }else{
-
+            infoItem.setOid(m_adresLineEdit->attributeValue(Style::dataoid).toUTF8());
+            infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
+            auto upt = UpdateItem(infoItem);
+            if( upt ) {
+                //TODO: updated information appearing must implement
+            }
         }
     });
 }
