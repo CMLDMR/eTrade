@@ -27,6 +27,12 @@ private:
     void init();
 
     Wt::WLineEdit* m_adresLineEdit{nullptr};
+    void updateAddress();
+
+    Wt::WLineEdit* m_mailadresLineEdit{nullptr};
+    Wt::WLineEdit* m_mainUrlAddressLine{nullptr};
+
+    void updateMailAddress();
 
 
 

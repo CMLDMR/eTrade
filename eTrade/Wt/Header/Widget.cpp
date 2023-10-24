@@ -6,6 +6,7 @@
 #include <memory.h>
 
 #include <Wt/WHBoxLayout.h>
+#include <Wt/WLink.h>
 #include <Wt/WText.h>
 
 using namespace Wt;
@@ -58,6 +59,11 @@ void Widget::onList(const std::vector<eCore::HeaderInfo::MainHeaderInfo> &mlist)
         if( item.valueType() == MainHeaderInfo::DefinationKey::address ){
             m_AddressContainer->setAdress(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data());
         }
+
+        if( item.valueType() == MainHeaderInfo::DefinationKey::mail ){
+            m_AddressContainer->setMailAddress(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data(),
+                                               item.value(MainHeaderInfo::Key::clickUrl).value().view().get_string().value.data());
+        }
     }
 }
 
@@ -70,6 +76,12 @@ AddressContainer::AddressContainer()
 void AddressContainer::setAdress(const std::string &addressText)
 {
     m_addressText->setText(addressText);
+}
+
+void AddressContainer::setMailAddress(const std::string &mailAddressText, const std::string &clickUrl)
+{
+    m_mailAnchor->setText(mailAddressText);
+    m_mailAnchor->setLink(WLink(clickUrl));
 }
 
 void AddressContainer::init()
@@ -86,8 +98,17 @@ void AddressContainer::init()
 
     auto m_mailIcon = m_AddressLayout->addWidget(std::make_unique<Wt::WContainerWidget>());
     m_mailIcon->setAttributeValue(Style::style,Style::background::color::color(Style::color::Grey::DarkGray)+Style::color::color(Style::color::White::AliceBlue));
-    m_mailIcon->addNew<WText>("ttt@mail.com.tr");
     m_mailIcon->setPadding(15,Side::Left|Side::Right);
+
+    Wt::WLink eMaillink = Wt::WLink("https://www.webtoolkit.eu/");
+    eMaillink.setTarget(Wt::LinkTarget::NewWindow);
+
+    std::unique_ptr<Wt::WAnchor> anchor =
+        std::make_unique<Wt::WAnchor>(eMaillink,
+                                      "Wt homepage (in a new window)");
+
+    m_mailAnchor = anchor.get();
+    m_mailIcon->addWidget(std::move(anchor));
 
 
     m_AddressLayout->addStretch(1);
