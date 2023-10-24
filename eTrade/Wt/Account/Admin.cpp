@@ -14,8 +14,8 @@ using namespace Wt;
 namespace Account {
 
 
-Admin::Admin(UserItem *mUser)
-    :eCore::User::UserItem(mUser)
+Admin::Admin(eCore::User::UserItem *mUser)
+    :m_User(mUser)
 {
     init();
 }
@@ -56,14 +56,14 @@ void Admin::initUsers()
 {
 
     m_contentContainer->clear();
-    auto m_userManager = m_contentContainer->addNew<UserManager>(db());
+    auto m_userManager = m_contentContainer->addNew<UserManager>(m_User->db());
 }
 
 void Admin::initHeaderInfo()
 {
     m_contentContainer->clear();
 
-    m_contentContainer->addNew<HeaderInfo>();
+    m_contentContainer->addNew<HeaderInfo>(m_User);
 
 }
 

@@ -9,10 +9,12 @@
 #include <Wt/WText.h>
 
 using namespace Wt;
+using namespace eCore::HeaderInfo;
 
 namespace Header {
 
-Widget::Widget()
+Widget::Widget(DB *_mDB)
+    :eCore::HeaderInfo::MainHeaderInfoManager(_mDB)
 {
 
     init();
@@ -26,6 +28,7 @@ Wt::Signal<NoClass> &Widget::clickAccount()
 
 void Widget::init()
 {
+    m_HeaderList = List();
     addStyleClass(Bootstrap::Grid::container_fluid);
     setAttributeValue(Style::style,Style::background::color::color(Style::color::Grey::LightGray));
 
@@ -40,13 +43,33 @@ void Widget::init()
         m_clickAccount.emit(NoClass());
     });
 
+    UpdateList();
+
 }
 
+void Widget::errorOccured(const std::string &errorText)
+{
+
+}
+
+void Widget::onList(const std::vector<eCore::HeaderInfo::MainHeaderInfo> &mlist)
+{
+    for( const auto &item : mlist ) {
+        if( item.valueType() == MainHeaderInfo::DefinationKey::address ){
+            m_AddressContainer->setAdress(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data());
+        }
+    }
+}
 
 
 AddressContainer::AddressContainer()
 {
     init();
+}
+
+void AddressContainer::setAdress(const std::string &addressText)
+{
+    m_addressText->setText(addressText);
 }
 
 void AddressContainer::init()
@@ -56,10 +79,10 @@ void AddressContainer::init()
 
     m_AddressLayout->addSpacing(20);
 
-    auto m_geoCoorIcon = m_AddressLayout->addWidget(std::make_unique<Wt::WContainerWidget>());
-    m_geoCoorIcon->setAttributeValue(Style::style,Style::background::color::color(Style::color::Grey::DarkGray)+Style::color::color(Style::color::White::AliceBlue));
-    m_geoCoorIcon->addNew<WText>("Address");
-    m_geoCoorIcon->setPadding(15,Side::Left|Side::Right);
+    auto m_addressTextContainer = m_AddressLayout->addWidget(std::make_unique<Wt::WContainerWidget>());
+    m_addressTextContainer->setAttributeValue(Style::style,Style::background::color::color(Style::color::Grey::DarkGray)+Style::color::color(Style::color::White::AliceBlue));
+    m_addressText = m_addressTextContainer->addNew<WText>("Address");
+    m_addressTextContainer->setPadding(15,Side::Left|Side::Right);
 
     auto m_mailIcon = m_AddressLayout->addWidget(std::make_unique<Wt::WContainerWidget>());
     m_mailIcon->setAttributeValue(Style::style,Style::background::color::color(Style::color::Grey::DarkGray)+Style::color::color(Style::color::White::AliceBlue));
@@ -100,3 +123,5 @@ void AddressContainer::init()
 }
 
 } // namespace Header
+
+

@@ -2,10 +2,12 @@
 #define HEADER_WIDGET_H
 
 #include <Wt/WContainerWidget.h>
+#include "Core/MainHeaderInfo.h"
 
 
 namespace Wt {
 class WHBoxLayout;
+class WText;
 }
 
 namespace Header {
@@ -14,10 +16,10 @@ namespace Header {
 class AddressContainer;
 class MenuBar;
 
-class Widget : public Wt::WContainerWidget
+class Widget : public Wt::WContainerWidget, public eCore::HeaderInfo::MainHeaderInfoManager
 {
 public:
-    Widget();
+    Widget(MongoCore::DB* _mDB);
 
 
     Wt::Signal<Wt::NoClass> &clickAccount();
@@ -30,6 +32,16 @@ private:
 
 
     Wt::Signal<Wt::NoClass> m_clickAccount;
+
+    std::vector<eCore::HeaderInfo::MainHeaderInfo> m_HeaderList;
+
+    // DB interface
+public:
+    virtual void errorOccured(const std::string &errorText) override;
+
+    // MainHeaderInfoManager interface
+public:
+    virtual void onList(const std::vector<eCore::HeaderInfo::MainHeaderInfo> &mlist) override;
 };
 
 
@@ -38,9 +50,13 @@ class AddressContainer : public Wt::WContainerWidget
 public:
     AddressContainer();
 
+    void setAdress( const std::string &addressText );
+
 private:
     void init();
     Wt::WHBoxLayout* m_AddressLayout{nullptr};
+
+    Wt::WText* m_addressText;
 
 };
 

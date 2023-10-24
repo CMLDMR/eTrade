@@ -36,7 +36,7 @@ void MainApplication::init()
     Wt::WApplication::instance()->setTheme(m_wtTheme);
     root()->addStyleClass(Bootstrap::Grid::container_fluid);
 
-    auto m_headerContainer = root()->addNew<Header::Widget>();
+    auto m_headerContainer = root()->addNew<Header::Widget>(m_db);
 
 
     auto body = root()->addNew<Body::Body>(m_db);

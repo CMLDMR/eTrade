@@ -8,7 +8,7 @@
 
 namespace Account {
 
-class Admin : public Wt::WContainerWidget, public eCore::User::UserItem
+class Admin : public Wt::WContainerWidget
 {
 public:
     Admin(eCore::User::UserItem* mUser);
@@ -24,6 +24,8 @@ private:
 
     void initUsers();
     void initHeaderInfo();
+
+    eCore::User::UserItem* m_User;
 };
 
 } // namespace Account

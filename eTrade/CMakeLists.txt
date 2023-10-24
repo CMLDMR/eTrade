@@ -21,7 +21,8 @@ set(bsoncxx_DIR C:/Mongo/mongocxx-3.8/lib/cmake/bsoncxx-3.8.0)
 set(mongocxx_DIR C:/Mongo/mongocxx-3.8/lib/cmake/mongocxx-3.8.0)
 
 
-include_directories("${CMAKE_SOURCE_DIR}")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
+
 
 add_library(Bootstrap5ThemeKeys SHARED
     Bootstrap/Bootstrap5ThemaKeys.h
@@ -34,11 +35,13 @@ target_compile_definitions(Bootstrap5ThemeKeys PRIVATE BOOTSRAPTHEMEKEYS_LIBRARY
 
 
 add_library(eCore SHARED
+    Core/magic_enum.hpp
     Core/Core_global.h
     Core/Language.h Core/Language.cpp
     Core/Text.h Core/Text.cpp
     Core/User.h Core/User.cpp
     Core/Manager.h Core/Manager.cpp
+    Core/MainHeaderInfo.h Core/MainHeaderInfo.cpp
 )
 target_compile_definitions(eCore PRIVATE ECORE_LIBRARY)
 
