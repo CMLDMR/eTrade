@@ -38,6 +38,14 @@ void Account::HeaderInfo::onList(const std::vector<eCore::HeaderInfo::MainHeader
                 m_adresLineEdit->setAttributeValue(Style::dataoid,item.oid().value().to_string());
             }
         }
+
+        if( item.valueType() == MainHeaderInfo::DefinationKey::mail ){
+            if( m_mailadresLineEdit && m_mainUrlAddressLine ) {
+                m_mailadresLineEdit->setText(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data());
+                m_mailadresLineEdit->setAttributeValue(Style::dataoid,item.oid().value().to_string());
+                m_mainUrlAddressLine->setText(item.value(MainHeaderInfo::Key::clickUrl).value().view().get_string().value.data());
+            }
+        }
     }
 }
 
@@ -56,26 +64,7 @@ void Account::HeaderInfo::init()
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
     adresDegisBtn->addStyleClass(Bootstrap::Grid::full(2));
 
-    adresDegisBtn->clicked().connect([=](){
-        MainHeaderInfo infoItem;
-
-        auto count = countItem(infoItem);
-        if( count == 0 ) {
-            infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::address);
-            infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
-            auto ins = InsertItem(infoItem);
-            if( ins.size() ) {
-                //TODO: updated information appearing must implement
-            }
-        }else{
-            infoItem.setOid(m_adresLineEdit->attributeValue(Style::dataoid).toUTF8());
-            infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
-            auto upt = UpdateItem(infoItem);
-            if( upt ) {
-                //TODO: updated information appearing must implement
-            }
-        }
-    });
+    adresDegisBtn->clicked().connect(this,&Account::HeaderInfo::updateAddress);
 }
 
 {
@@ -84,19 +73,22 @@ void Account::HeaderInfo::init()
     blank->setHeight(5);
 
     auto addressLineEditContainer = content()->addNew<Wt::WContainerWidget>();
-    auto addressLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
     addressLineEditContainer->addStyleClass(Bootstrap::Grid::full(5));
-    addressLine->setPlaceholderText(eCore::tr("eMail Bilgisi"));
+
+    m_mailadresLineEdit = addressLineEditContainer->addNew<Wt::WLineEdit>();
+    m_mailadresLineEdit->setPlaceholderText(eCore::tr("eMail Bilgisi"));
 
     auto emailLineEditContainer = content()->addNew<Wt::WContainerWidget>();
     emailLineEditContainer->addStyleClass(Bootstrap::Grid::full(5));
 
-    auto emailLine = emailLineEditContainer->addNew<Wt::WLineEdit>();
-    emailLine->setPlaceholderText(eCore::tr("url( mailto:test@test.net )"));
+    m_mainUrlAddressLine = emailLineEditContainer->addNew<Wt::WLineEdit>();
+    m_mainUrlAddressLine->setPlaceholderText(eCore::tr("url( mailto:test@test.net )"));
 
     auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("eMail Bilgisi Değiştir"));
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
     adresDegisBtn->addStyleClass(Bootstrap::Grid::full(2));
+    adresDegisBtn->clicked().connect(this,&Account::HeaderInfo::updateMailAddress);
+
 }
 
 {
@@ -161,4 +153,53 @@ void Account::HeaderInfo::init()
 
 //TODO: Logo Değiştirme Eklenecek
 
+}
+
+void Account::HeaderInfo::updateAddress()
+{
+    MainHeaderInfo infoItem;
+    infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::address);
+
+    auto count = countItem(infoItem);
+    if( count == 0 ) {
+        infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
+        auto ins = InsertItem(infoItem);
+        if( ins.size() ) {
+                //TODO: updated information appearing must implement
+        }
+    }else{
+        infoItem.setOid(m_adresLineEdit->attributeValue(Style::dataoid).toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
+        auto upt = UpdateItem(infoItem);
+        if( upt ) {
+                //TODO: updated information appearing must implement
+        }
+    }
+}
+
+void Account::HeaderInfo::updateMailAddress()
+{
+    MainHeaderInfo infoItem;
+
+    auto count = countItem(infoItem);
+    if( count == 0 ) {
+        infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::mail);
+        infoItem.setValue(MainHeaderInfo::Key::text,m_mailadresLineEdit->text().toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_mainUrlAddressLine->text().toUTF8());
+
+        auto ins = InsertItem(infoItem);
+        if( ins.size() ) {
+            //TODO: updated information appearing must implement
+        }
+    }else{
+        infoItem.setOid(m_mailadresLineEdit->attributeValue(Style::dataoid).toUTF8());
+        infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::mail);
+        infoItem.setValue(MainHeaderInfo::Key::text,m_mailadresLineEdit->text().toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_mainUrlAddressLine->text().toUTF8());
+
+        auto upt = UpdateItem(infoItem);
+        if( upt ) {
+            //TODO: updated information appearing must implement
+        }
+    }
 }

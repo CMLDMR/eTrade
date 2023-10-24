@@ -1,6 +1,7 @@
 #ifndef HEADER_WIDGET_H
 #define HEADER_WIDGET_H
 
+#include <Wt/WAnchor.h>
 #include <Wt/WContainerWidget.h>
 #include "Core/MainHeaderInfo.h"
 
@@ -51,12 +52,15 @@ public:
     AddressContainer();
 
     void setAdress( const std::string &addressText );
+    void setMailAddress( const std::string &mailAddressText , const std::string &clickUrl );
 
 private:
     void init();
     Wt::WHBoxLayout* m_AddressLayout{nullptr};
 
-    Wt::WText* m_addressText;
+    Wt::WText* m_addressText{nullptr};
+    Wt::WText* m_mailAddressText{nullptr};
+    Wt::WAnchor* m_mailAnchor{nullptr};
 
 };
 
