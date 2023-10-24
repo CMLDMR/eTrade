@@ -16,6 +16,7 @@ MongoCore::Item::Item(const std::string &collection)
     mDoc.clear ();
 }
 
+
 MongoCore::Item::Item(const bsoncxx::document::view mView, const std::string &_Collection)
     :mCollection(_Collection)
 {
