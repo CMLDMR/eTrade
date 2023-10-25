@@ -20,10 +20,22 @@ public:
     Wt::WDialog* createDialog(const std::string &title );
     void removeDialog( Wt::WDialog* mDialog );
 
+    enum class InfoType {
+        info,
+        warn,
+        critical,
+        error,
+        unknown
+    };
+
+    void showInfo( const std::string &message , const InfoType type = InfoType::info );
+
 private:
     Wt::WContainerWidget* m_headerWidget;
     Wt::WContainerWidget* m_contentWidget;
     Wt::WContainerWidget* m_footerWidget;
+
+    Wt::WContainerWidget* m_infoWidget{nullptr};
 
 };
 

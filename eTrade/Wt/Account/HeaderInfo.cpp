@@ -94,6 +94,7 @@ void Account::HeaderInfo::init()
     adresDegisBtn->addStyleClass(Bootstrap::Grid::full(2));
 
     adresDegisBtn->clicked().connect(this,&Account::HeaderInfo::updateAddress);
+
 }
 
 {
@@ -150,6 +151,8 @@ void Account::HeaderInfo::init()
     auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Değiştir"));
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
     adresDegisBtn->addStyleClass(Bootstrap::Grid::full(2));
+    adresDegisBtn->clicked().connect(this,&Account::HeaderInfo::updateTwitterURL);
+
 }
 
 {
@@ -165,6 +168,8 @@ void Account::HeaderInfo::init()
     auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Değiştir"));
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
     adresDegisBtn->addStyleClass(Bootstrap::Grid::full(2));
+    adresDegisBtn->clicked().connect(this,&Account::HeaderInfo::updateLinkedinURL);
+
 }
 
 {
@@ -180,6 +185,8 @@ void Account::HeaderInfo::init()
     auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Değiştir"));
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
     adresDegisBtn->addStyleClass(Bootstrap::Grid::full(2));
+    adresDegisBtn->clicked().connect(this,&Account::HeaderInfo::updateInstagramURL);
+
 }
 
 //TODO: Logo Değiştirme Eklenecek
@@ -196,14 +203,18 @@ void Account::HeaderInfo::updateAddress()
         infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
         auto ins = InsertItem(infoItem);
         if( ins.size() ) {
-                //TODO: updated information appearing must implement
+            showInfo("Adres Bilgileri Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }else{
         infoItem.setOid(m_adresLineEdit->attributeValue(Style::dataoid).toUTF8());
         infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
         auto upt = UpdateItem(infoItem);
         if( upt ) {
-                //TODO: updated information appearing must implement
+            showInfo("Adres Bilgileri Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }
 }
@@ -220,7 +231,9 @@ void Account::HeaderInfo::updateMailAddress()
 
         auto ins = InsertItem(infoItem);
         if( ins.size() ) {
-            //TODO: updated information appearing must implement
+            showInfo("Mail Bilgileri Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }else{
         infoItem.setOid(m_mailadresLineEdit->attributeValue(Style::dataoid).toUTF8());
@@ -230,7 +243,9 @@ void Account::HeaderInfo::updateMailAddress()
 
         auto upt = UpdateItem(infoItem);
         if( upt ) {
-            //TODO: updated information appearing must implement
+            showInfo("Mail Bilgileri Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }
 }
@@ -245,14 +260,18 @@ void Account::HeaderInfo::updateFaceBookURL()
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_faceBookLine->text().toUTF8());
         auto ins = InsertItem(infoItem);
         if( ins.size() ) {
-            //TODO: updated information appearing must implement
+            showInfo("Facebook Url Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }else{
         infoItem.setOid(m_faceBookLine->attributeValue(Style::dataoid).toUTF8());
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_faceBookLine->text().toUTF8());
         auto upt = UpdateItem(infoItem);
         if( upt ) {
-            //TODO: updated information appearing must implement
+            showInfo("Facebook Url Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }
 }
@@ -267,14 +286,18 @@ void Account::HeaderInfo::updateTwitterURL()
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_twitterLine->text().toUTF8());
         auto ins = InsertItem(infoItem);
         if( ins.size() ) {
-            //TODO: updated information appearing must implement
+            showInfo("Twitter Url Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }else{
         infoItem.setOid(m_twitterLine->attributeValue(Style::dataoid).toUTF8());
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_twitterLine->text().toUTF8());
         auto upt = UpdateItem(infoItem);
         if( upt ) {
-            //TODO: updated information appearing must implement
+            showInfo("Twitter Url Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }
 }
@@ -289,14 +312,18 @@ void Account::HeaderInfo::updateLinkedinURL()
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_linkedinLine->text().toUTF8());
         auto ins = InsertItem(infoItem);
         if( ins.size() ) {
-            //TODO: updated information appearing must implement
+            showInfo("Linkedin Url Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }else{
         infoItem.setOid(m_linkedinLine->attributeValue(Style::dataoid).toUTF8());
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_linkedinLine->text().toUTF8());
         auto upt = UpdateItem(infoItem);
         if( upt ) {
-            //TODO: updated information appearing must implement
+            showInfo("Linkedin Url Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }
 }
@@ -311,14 +338,18 @@ void Account::HeaderInfo::updateInstagramURL()
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_instagramLine->text().toUTF8());
         auto ins = InsertItem(infoItem);
         if( ins.size() ) {
-            //TODO: updated information appearing must implement
+            showInfo("Instagram Url Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }else{
         infoItem.setOid(m_instagramLine->attributeValue(Style::dataoid).toUTF8());
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_instagramLine->text().toUTF8());
         auto upt = UpdateItem(infoItem);
         if( upt ) {
-            //TODO: updated information appearing must implement
+            showInfo("Instagram Url Değiştirildi");
+        }else{
+            showInfo("Bir Hata Oluştu: " + this->getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     }
 }

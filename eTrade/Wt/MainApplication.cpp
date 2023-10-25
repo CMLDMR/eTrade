@@ -36,6 +36,8 @@ void MainApplication::init()
     Wt::WApplication::instance()->setTheme(m_wtTheme);
     root()->addStyleClass(Bootstrap::Grid::container_fluid);
 
+    WApplication::useStyleSheet(WLink("css/informer.css"));
+
     auto m_headerContainer = root()->addNew<Header::Widget>(m_db);
 
 

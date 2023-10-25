@@ -93,9 +93,10 @@ add_executable(eTrade
     Wt/Account/HeaderInfo.h Wt/Account/HeaderInfo.cpp
     Wt/Account/UserManager.h Wt/Account/UserManager.cpp
     Wt/Widget/ContainerWidget.h Wt/Widget/ContainerWidget.cpp
-
-
+    ../docroot/css/informer.css
 )
+
+
 
 target_compile_definitions(eTrade PRIVATE -DQT_NO_KEYWORDS)
 
