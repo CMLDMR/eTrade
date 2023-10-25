@@ -1,8 +1,12 @@
 #include "ContainerWidget.h"
 
 #include "Bootstrap/Bootstrap5ThemaKeys.h"
+#include "Bootstrap/inlinestyle.h"
+
 #include <Wt/WApplication.h>
 #include <Wt/WPushButton.h>
+
+using namespace Wt;
 
 namespace Widget {
 
@@ -58,6 +62,40 @@ Wt::WDialog* ContainerWidget::createDialog(const std::string &title)
 void ContainerWidget::removeDialog(Wt::WDialog *mDialog)
 {
     wApp->removeChild(mDialog);
+}
+
+void ContainerWidget::showInfo(const std::string &message, const InfoType type)
+{
+    //TODO: remove if time finished
+    if( ! m_infoWidget )
+        m_infoWidget = wApp->root()->addNew<Wt::WContainerWidget>();
+
+    m_infoWidget->removeStyleClass("informer");
+
+    m_infoWidget->addStyleClass("informer");
+    m_infoWidget->setPadding(15,AllSides);
+    m_infoWidget->setContentAlignment(AlignmentFlag::Center);
+    m_infoWidget->setMinimumSize(350,WLength::Auto);
+
+    m_infoWidget->setPositionScheme(Wt::PositionScheme::Fixed);
+
+    m_infoWidget->setOffsets(-30,Wt::Side::Bottom);
+    m_infoWidget->setOffsets(WLength("40%"),Wt::Side::Left);
+
+    m_infoWidget->addNew<Wt::WText>("<b>"+message+"</b>");
+    switch ( type ) {
+    case InfoType::info:
+        m_infoWidget->setAttributeValue(Style::style,Style::background::color::color(Style::color::Purple::DodgerBlue)+
+                                                       Style::color::color(Style::color::White::AliceBlue));
+        break;
+    case InfoType::error:
+        m_infoWidget->setAttributeValue(Style::style,Style::background::color::color(Style::color::Red::DarkRed)+
+                                                       Style::color::color(Style::color::White::AliceBlue));
+        break;
+    default:
+        break;
+    }
+
 }
 
 } // namespace Widget
