@@ -31,11 +31,19 @@ private:
 
     Wt::WLineEdit* m_mailadresLineEdit{nullptr};
     Wt::WLineEdit* m_mainUrlAddressLine{nullptr};
-
     void updateMailAddress();
 
+    Wt::WLineEdit* m_faceBookLine{nullptr};
+    void updateFaceBookURL();
 
+    Wt::WLineEdit* m_twitterLine{nullptr};
+    void updateTwitterURL();
 
+    Wt::WLineEdit* m_linkedinLine{nullptr};
+    void updateLinkedinURL();
+
+    Wt::WLineEdit* m_instagramLine{nullptr};
+    void updateInstagramURL();
 };
 
 } // namespace Account

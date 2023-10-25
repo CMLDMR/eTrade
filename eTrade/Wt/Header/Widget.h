@@ -53,6 +53,10 @@ public:
 
     void setAdress( const std::string &addressText );
     void setMailAddress( const std::string &mailAddressText , const std::string &clickUrl );
+    void setFaceBookAddress( const std::string &clickUrl );
+    void setTwitterAddress( const std::string &clickUrl );
+    void setLinkedinAddress( const std::string &clickUrl );
+    void setInstagramAddress( const std::string &clickUrl );
 
 private:
     void init();
@@ -61,6 +65,10 @@ private:
     Wt::WText* m_addressText{nullptr};
     Wt::WText* m_mailAddressText{nullptr};
     Wt::WAnchor* m_mailAnchor{nullptr};
+    Wt::WAnchor* m_facebookAnchor{nullptr};
+    Wt::WAnchor* m_twitterAnchor{nullptr};
+    Wt::WAnchor* m_linkedinAnchor{nullptr};
+    Wt::WAnchor* m_instagramAnchor{nullptr};
 
 };
 

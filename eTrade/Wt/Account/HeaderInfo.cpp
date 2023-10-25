@@ -32,19 +32,48 @@ void Account::HeaderInfo::errorOccured(const std::string &errorText)
 void Account::HeaderInfo::onList(const std::vector<eCore::HeaderInfo::MainHeaderInfo> &mlist)
 {
     for( const auto &item : mlist ) {
-        if( item.valueType() == MainHeaderInfo::DefinationKey::address ){
+
+
+        switch (item.valueType()) {
+        case MainHeaderInfo::DefinationKey::address:
             if( m_adresLineEdit ) {
                 m_adresLineEdit->setText(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data());
                 m_adresLineEdit->setAttributeValue(Style::dataoid,item.oid().value().to_string());
             }
-        }
-
-        if( item.valueType() == MainHeaderInfo::DefinationKey::mail ){
+            break;
+        case MainHeaderInfo::DefinationKey::mail:
             if( m_mailadresLineEdit && m_mainUrlAddressLine ) {
                 m_mailadresLineEdit->setText(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data());
                 m_mailadresLineEdit->setAttributeValue(Style::dataoid,item.oid().value().to_string());
                 m_mainUrlAddressLine->setText(item.value(MainHeaderInfo::Key::clickUrl).value().view().get_string().value.data());
             }
+            break;
+        case MainHeaderInfo::DefinationKey::facebook:
+            if( m_faceBookLine ) {
+                m_faceBookLine->setText(item.value(MainHeaderInfo::Key::clickUrl).value().view().get_string().value.data());
+                m_faceBookLine->setAttributeValue(Style::dataoid,item.oid().value().to_string());
+            }
+            break;
+        case MainHeaderInfo::DefinationKey::twitter:
+            if( m_twitterLine ) {
+                m_twitterLine->setText(item.value(MainHeaderInfo::Key::clickUrl).value().view().get_string().value.data());
+                m_twitterLine->setAttributeValue(Style::dataoid,item.oid().value().to_string());
+            }
+            break;
+        case MainHeaderInfo::DefinationKey::linkedin:
+            if( m_linkedinLine ) {
+                m_linkedinLine->setText(item.value(MainHeaderInfo::Key::clickUrl).value().view().get_string().value.data());
+                m_linkedinLine->setAttributeValue(Style::dataoid,item.oid().value().to_string());
+            }
+            break;
+        case MainHeaderInfo::DefinationKey::instagram:
+            if( m_instagramLine ) {
+                m_instagramLine->setText(item.value(MainHeaderInfo::Key::clickUrl).value().view().get_string().value.data());
+                m_instagramLine->setAttributeValue(Style::dataoid,item.oid().value().to_string());
+            }
+            break;
+        default:
+            break;
         }
     }
 }
@@ -97,9 +126,26 @@ void Account::HeaderInfo::init()
     blank->setHeight(5);
 
     auto addressLineEditContainer = content()->addNew<Wt::WContainerWidget>();
-    auto addressLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
     addressLineEditContainer->addStyleClass(Bootstrap::Grid::full(10));
-    addressLine->setPlaceholderText(eCore::tr("Facebook URL"));
+    m_faceBookLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
+    m_faceBookLine->setPlaceholderText(eCore::tr("Facebook URL"));
+
+    auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Değiştir"));
+    adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
+    adresDegisBtn->addStyleClass(Bootstrap::Grid::full(2));
+    adresDegisBtn->clicked().connect(this,&Account::HeaderInfo::updateFaceBookURL);
+
+}
+
+{
+    auto blank = content()->addNew<Wt::WContainerWidget>();
+    blank->addStyleClass(Bootstrap::Grid::full(12));
+    blank->setHeight(5);
+
+    auto addressLineEditContainer = content()->addNew<Wt::WContainerWidget>();
+    addressLineEditContainer->addStyleClass(Bootstrap::Grid::full(10));
+    m_twitterLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
+    m_twitterLine->setPlaceholderText(eCore::tr("Twitter URL"));
 
     auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Değiştir"));
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
@@ -112,9 +158,9 @@ void Account::HeaderInfo::init()
     blank->setHeight(5);
 
     auto addressLineEditContainer = content()->addNew<Wt::WContainerWidget>();
-    auto addressLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
     addressLineEditContainer->addStyleClass(Bootstrap::Grid::full(10));
-    addressLine->setPlaceholderText(eCore::tr("Twitter URL"));
+    m_linkedinLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
+    m_linkedinLine->setPlaceholderText(eCore::tr("Linkedin URL"));
 
     auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Değiştir"));
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
@@ -127,24 +173,9 @@ void Account::HeaderInfo::init()
     blank->setHeight(5);
 
     auto addressLineEditContainer = content()->addNew<Wt::WContainerWidget>();
-    auto addressLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
     addressLineEditContainer->addStyleClass(Bootstrap::Grid::full(10));
-    addressLine->setPlaceholderText(eCore::tr("Linkedin URL"));
-
-    auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Değiştir"));
-    adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
-    adresDegisBtn->addStyleClass(Bootstrap::Grid::full(2));
-}
-
-{
-    auto blank = content()->addNew<Wt::WContainerWidget>();
-    blank->addStyleClass(Bootstrap::Grid::full(12));
-    blank->setHeight(5);
-
-    auto addressLineEditContainer = content()->addNew<Wt::WContainerWidget>();
-    auto addressLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
-    addressLineEditContainer->addStyleClass(Bootstrap::Grid::full(10));
-    addressLine->setPlaceholderText(eCore::tr("Instagram URL"));
+    m_instagramLine = addressLineEditContainer->addNew<Wt::WLineEdit>();
+    m_instagramLine->setPlaceholderText(eCore::tr("Instagram URL"));
 
     auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Değiştir"));
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
@@ -197,6 +228,94 @@ void Account::HeaderInfo::updateMailAddress()
         infoItem.setValue(MainHeaderInfo::Key::text,m_mailadresLineEdit->text().toUTF8());
         infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_mainUrlAddressLine->text().toUTF8());
 
+        auto upt = UpdateItem(infoItem);
+        if( upt ) {
+            //TODO: updated information appearing must implement
+        }
+    }
+}
+
+void Account::HeaderInfo::updateFaceBookURL()
+{
+    MainHeaderInfo infoItem;
+    infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::facebook);
+
+    auto count = countItem(infoItem);
+    if( count == 0 ) {
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_faceBookLine->text().toUTF8());
+        auto ins = InsertItem(infoItem);
+        if( ins.size() ) {
+            //TODO: updated information appearing must implement
+        }
+    }else{
+        infoItem.setOid(m_faceBookLine->attributeValue(Style::dataoid).toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_faceBookLine->text().toUTF8());
+        auto upt = UpdateItem(infoItem);
+        if( upt ) {
+            //TODO: updated information appearing must implement
+        }
+    }
+}
+
+void Account::HeaderInfo::updateTwitterURL()
+{
+    MainHeaderInfo infoItem;
+    infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::twitter);
+
+    auto count = countItem(infoItem);
+    if( count == 0 ) {
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_twitterLine->text().toUTF8());
+        auto ins = InsertItem(infoItem);
+        if( ins.size() ) {
+            //TODO: updated information appearing must implement
+        }
+    }else{
+        infoItem.setOid(m_twitterLine->attributeValue(Style::dataoid).toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_twitterLine->text().toUTF8());
+        auto upt = UpdateItem(infoItem);
+        if( upt ) {
+            //TODO: updated information appearing must implement
+        }
+    }
+}
+
+void Account::HeaderInfo::updateLinkedinURL()
+{
+    MainHeaderInfo infoItem;
+    infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::linkedin);
+
+    auto count = countItem(infoItem);
+    if( count == 0 ) {
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_linkedinLine->text().toUTF8());
+        auto ins = InsertItem(infoItem);
+        if( ins.size() ) {
+            //TODO: updated information appearing must implement
+        }
+    }else{
+        infoItem.setOid(m_linkedinLine->attributeValue(Style::dataoid).toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_linkedinLine->text().toUTF8());
+        auto upt = UpdateItem(infoItem);
+        if( upt ) {
+            //TODO: updated information appearing must implement
+        }
+    }
+}
+
+void Account::HeaderInfo::updateInstagramURL()
+{
+    MainHeaderInfo infoItem;
+    infoItem.setDefination(MainHeaderInfo::Key::defination,MainHeaderInfo::DefinationKey::instagram);
+
+    auto count = countItem(infoItem);
+    if( count == 0 ) {
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_instagramLine->text().toUTF8());
+        auto ins = InsertItem(infoItem);
+        if( ins.size() ) {
+            //TODO: updated information appearing must implement
+        }
+    }else{
+        infoItem.setOid(m_instagramLine->attributeValue(Style::dataoid).toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::clickUrl,m_instagramLine->text().toUTF8());
         auto upt = UpdateItem(infoItem);
         if( upt ) {
             //TODO: updated information appearing must implement
