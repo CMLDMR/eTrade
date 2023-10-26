@@ -59,7 +59,8 @@ void Widget::onList(const std::vector<eCore::HeaderInfo::MainHeaderInfo> &mlist)
 
         switch (item.valueType()) {
         case MainHeaderInfo::DefinationKey::address:
-            m_AddressContainer->setAdress(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data());
+            m_AddressContainer->setAdress(item.value(MainHeaderInfo::Key::text).value().view().get_string().value.data(),
+                                          item.value(MainHeaderInfo::Key::visible).value().view().get_bool().value);
 
             break;
         case MainHeaderInfo::DefinationKey::mail:
@@ -94,9 +95,11 @@ AddressContainer::AddressContainer()
     init();
 }
 
-void AddressContainer::setAdress(const std::string &addressText)
+void AddressContainer::setAdress(const std::string &addressText, const bool visible)
 {
     m_addressText->setText(addressText);
+    if( ! visible )
+        m_addressTextContainer->addStyleClass(Bootstrap::Utilities::Display::hide_all);
 }
 
 void AddressContainer::setMailAddress(const std::string &mailAddressText, const std::string &clickUrl)
@@ -132,7 +135,7 @@ void AddressContainer::init()
 
     m_AddressLayout->addSpacing(20);
 
-    auto m_addressTextContainer = m_AddressLayout->addWidget(std::make_unique<Wt::WContainerWidget>());
+    m_addressTextContainer = m_AddressLayout->addWidget(std::make_unique<Wt::WContainerWidget>());
     m_addressTextContainer->setAttributeValue(Style::style,Style::background::color::color(Style::color::Grey::DarkGray)+Style::color::color(Style::color::White::AliceBlue));
     m_addressText = m_addressTextContainer->addNew<WText>("Address");
     m_addressTextContainer->setPadding(15,Side::Left|Side::Right);

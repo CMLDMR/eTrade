@@ -51,7 +51,7 @@ class AddressContainer : public Wt::WContainerWidget
 public:
     AddressContainer();
 
-    void setAdress( const std::string &addressText );
+    void setAdress( const std::string &addressText , const bool visible = true );
     void setMailAddress( const std::string &mailAddressText , const std::string &clickUrl );
     void setFaceBookAddress( const std::string &clickUrl );
     void setTwitterAddress( const std::string &clickUrl );
@@ -63,6 +63,8 @@ private:
     Wt::WHBoxLayout* m_AddressLayout{nullptr};
 
     Wt::WText* m_addressText{nullptr};
+    Wt::WContainerWidget* m_addressTextContainer{nullptr};
+
     Wt::WText* m_mailAddressText{nullptr};
     Wt::WAnchor* m_mailAnchor{nullptr};
     Wt::WAnchor* m_facebookAnchor{nullptr};

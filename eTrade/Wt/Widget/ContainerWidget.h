@@ -35,7 +35,6 @@ private:
     Wt::WContainerWidget* m_contentWidget;
     Wt::WContainerWidget* m_footerWidget;
 
-    Wt::WContainerWidget* m_infoWidget{nullptr};
 
 };
 
