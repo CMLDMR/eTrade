@@ -5,6 +5,7 @@
 
 #include <Wt/WApplication.h>
 #include <Wt/WPushButton.h>
+#include <Wt/WTimer.h>
 
 using namespace Wt;
 
@@ -67,10 +68,8 @@ void ContainerWidget::removeDialog(Wt::WDialog *mDialog)
 void ContainerWidget::showInfo(const std::string &message, const InfoType type)
 {
     //TODO: remove if time finished
-    if( ! m_infoWidget )
-        m_infoWidget = wApp->root()->addNew<Wt::WContainerWidget>();
 
-    m_infoWidget->removeStyleClass("informer");
+    auto m_infoWidget = wApp->instance()->root()->addWidget(std::make_unique<Wt::WContainerWidget>());
 
     m_infoWidget->addStyleClass("informer");
     m_infoWidget->setPadding(15,AllSides);
@@ -95,6 +94,10 @@ void ContainerWidget::showInfo(const std::string &message, const InfoType type)
     default:
         break;
     }
+
+    Wt::WTimer::singleShot(std::chrono::seconds(4),[=](){
+        wApp->instance()->root()->removeWidget(m_infoWidget);
+    });
 
 }
 

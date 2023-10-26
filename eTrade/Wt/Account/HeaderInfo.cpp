@@ -4,6 +4,7 @@
 #include <Wt/WLineEdit.h>
 #include <Wt/WText.h>
 #include <Wt/WPushButton.h>
+#include <Wt/WCheckBox.h>
 
 #include "Bootstrap/Bootstrap5ThemaKeys.h"
 #include "Bootstrap/inlinestyle.h"
@@ -85,9 +86,13 @@ void Account::HeaderInfo::init()
 
 {
     auto addressLineEditContainer = content()->addNew<Wt::WContainerWidget>();
+    addressLineEditContainer->addStyleClass(Bootstrap::Grid::full(9));
     m_adresLineEdit = addressLineEditContainer->addNew<Wt::WLineEdit>();
-    addressLineEditContainer->addStyleClass(Bootstrap::Grid::full(10));
     m_adresLineEdit->setPlaceholderText(eCore::tr("Adres Bilgisi"));
+
+    auto visibleContainer = content()->addNew<Wt::WContainerWidget>();
+    visibleContainer->addStyleClass(Bootstrap::Grid::full(1));
+    m_adresCheckBox = visibleContainer->addNew<Wt::WCheckBox>(eCore::tr("Visible"));
 
     auto adresDegisBtn = content()->addNew<Wt::WPushButton>(eCore::tr("Adres Bilgisi Değiştir"));
     adresDegisBtn->addStyleClass(Bootstrap::Components::Buttons::Normal::Success);
@@ -201,6 +206,7 @@ void Account::HeaderInfo::updateAddress()
     auto count = countItem(infoItem);
     if( count == 0 ) {
         infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::visible,m_adresCheckBox->isChecked());
         auto ins = InsertItem(infoItem);
         if( ins.size() ) {
             showInfo("Adres Bilgileri Değiştirildi");
@@ -210,6 +216,7 @@ void Account::HeaderInfo::updateAddress()
     }else{
         infoItem.setOid(m_adresLineEdit->attributeValue(Style::dataoid).toUTF8());
         infoItem.setValue(MainHeaderInfo::Key::text,m_adresLineEdit->text().toUTF8());
+        infoItem.setValue(MainHeaderInfo::Key::visible,m_adresCheckBox->isChecked());
         auto upt = UpdateItem(infoItem);
         if( upt ) {
             showInfo("Adres Bilgileri Değiştirildi");

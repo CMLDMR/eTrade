@@ -27,6 +27,7 @@ private:
     void init();
 
     Wt::WLineEdit* m_adresLineEdit{nullptr};
+    Wt::WCheckBox* m_adresCheckBox{nullptr};
     void updateAddress();
 
     Wt::WLineEdit* m_mailadresLineEdit{nullptr};
