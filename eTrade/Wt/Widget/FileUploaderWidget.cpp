@@ -61,6 +61,7 @@ FileUploaderWidget::FileUploaderWidget(const std::string &title)
             }
 
             mFileLocation = std::string("tempfile/")+item.clientFileName();
+            mFileAbsoluteLocation = wApp->docRoot()+"/"+mFileLocation;
             std::filesystem::path hedefDosyaYolu(wApp->docRoot()+"/"+mFileLocation);
 
             try {
@@ -111,9 +112,9 @@ std::string FileUploaderWidget::fileLocation() const
     return mFileLocation;
 }
 
-std::string FileUploaderWidget::doocRootLocation() const
+std::string FileUploaderWidget::fileAbsoluteLocation() const
 {
-    return mDoocRootLocation;
+    return mFileAbsoluteLocation;
 }
 
 Signal<NoClass> &FileUploaderWidget::Uploaded()

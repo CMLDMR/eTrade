@@ -30,6 +30,14 @@ private:
 
     void uploadSlider();
 
+
+    // DB interface
+public:
+    virtual void errorOccured(const std::string &errorText) override;
+
+    // SliderManager interface
+public:
+    virtual void onList(const std::vector<eCore::Slider> &mlist) override;
 };
 
 } // namespace Account

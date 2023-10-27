@@ -44,7 +44,7 @@ public:
      * @brief doocRootLocation: Location is Without docroot folder
      * @return
      */
-    std::string doocRootLocation() const;
+    std::string fileAbsoluteLocation() const;
 
     /**
      * @brief Uploaded: Signal Triggered When File Uploaded
@@ -56,7 +56,7 @@ private:
     Wt::WFileUpload* mFileUploader;
 
     std::string mFileLocation;
-    std::string mDoocRootLocation;
+    std::string mFileAbsoluteLocation;
 
     bool mIsUploaded;
 

@@ -20,6 +20,7 @@ public:
         imgOid = 0,
         imgUrl,
         text,
+        altText,
         unKnown = 999
     };
 

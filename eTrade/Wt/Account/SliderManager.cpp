@@ -10,8 +10,12 @@
 #include <Wt/WHBoxLayout.h>
 #include <Wt/WPushButton.h>
 #include <Wt/WLineEdit.h>
+#include <Wt/WApplication.h>
 
 using namespace Wt;
+
+using eCore::Slider;
+
 
 namespace Account {
 
@@ -79,10 +83,12 @@ void SliderManager::init()
 {
     setLimit(8);
     initControlPanel();
-    addSlider("img/carousel-1.jpg","sd","55");
-    addSlider("img/carousel-1.jpg","sdf","df");
-    addSlider("img/carousel-1.jpg","dsfg","sdf");
-    addSlider("img/carousel-1.jpg","dfgdzxf","sdf");
+//    addSlider("img/carousel-1.jpg","sd","55");
+//    addSlider("img/carousel-1.jpg","sdf","df");
+//    addSlider("img/carousel-1.jpg","dsfg","sdf");
+//    addSlider("img/carousel-1.jpg","dfgdzxf","sdf");
+
+    UpdateList();
 }
 
 void SliderManager::initControlPanel()
@@ -101,8 +107,6 @@ void SliderManager::uploadSlider()
 
     mDialog->setWidth(720);
     mDialog->show();
-
-    using eCore::Slider;
 
     auto m_img = mDialog->contents()->addNew<WImage>(WLink("img/carousel-1.jpg"));
     m_img->addStyleClass(Bootstrap::Grid::container_fluid);
@@ -127,12 +131,29 @@ void SliderManager::uploadSlider()
 
     m_fileUploader->Uploaded().connect([=](){
         m_img->setImageLink(WLink(m_fileUploader->fileLocation()));
+
+
     });
 
     acceptbtn->addStyleClass(Bootstrap::Components::Buttons::Outline::Primary);
     acceptbtn->clicked().connect([=](){
         if( m_fileUploader->isUploaded() ) {
-            addSlider(m_fileUploader->fileLocation(),m_titleLineEdit->text().toUTF8(),m_altTextLineEdit->text().toUTF8());
+
+            eCore::Slider item;
+            item.setValue(Slider::Key::altText,m_altTextLineEdit->text().toUTF8());
+            item.setValue(Slider::Key::text,m_altTextLineEdit->text().toUTF8());
+
+            auto imgOid = this->uploadfile(m_fileUploader->fileAbsoluteLocation());
+            item.setValue(Slider::Key::imgOid,imgOid);
+
+            auto ins = InsertItem(item);
+
+            if( ins.size() ) {
+                UpdateList();
+            }else{
+                showInfo(getLastError(),Widget::ContainerWidget::InfoType::error);
+            }
+            UpdateList();
         }
     });
 
@@ -141,3 +162,20 @@ void SliderManager::uploadSlider()
 
 
 } // namespace Account
+
+
+void Account::SliderManager::errorOccured(const std::string &errorText)
+{
+}
+
+void Account::SliderManager::onList(const std::vector<eCore::Slider> &mlist)
+{
+
+    content()->clear();
+
+    for( const auto &item : mlist ) {
+        auto imgUrl = downloadFileWeb(item.value(Slider::Key::imgOid).value().view().get_oid().value.to_string(),wApp->docRoot());
+        addSlider(imgUrl,item.value(Slider::Key::text).value().view().get_string().value.data(),
+                  item.value(Slider::Key::altText).value().view().get_string().value.data());
+    }
+}
