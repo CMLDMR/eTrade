@@ -70,7 +70,7 @@ void UserManager::initContent()
 
 void UserManager::addNewUser()
 {
-    auto mDialog = createDialog("Yeni Kullanıcı Ekle");
+    auto [mDialog,acceptBtn] = createDialog("Yeni Kullanıcı Ekle");
     mDialog->setWidth(640);
 
     auto mLayout = mDialog->contents()->setLayout(std::make_unique<WGridLayout>());

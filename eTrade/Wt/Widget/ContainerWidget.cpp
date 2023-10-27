@@ -46,9 +46,10 @@ Wt::WContainerWidget *ContainerWidget::footer()
     return m_footerWidget;
 }
 
-Wt::WDialog* ContainerWidget::createDialog(const std::string &title)
+std::pair<Wt::WDialog*,Wt::WPushButton*> ContainerWidget::createDialog(const std::string &title, const std::string &acceptBtnName )
 {
     auto mDialog = wApp->addChild(std::make_unique<Wt::WDialog>(title));
+    auto acceptBtn = mDialog->footer()->addNew<Wt::WPushButton>("Kaydet");
 
 
     auto closeBtn = mDialog->footer()->addNew<Wt::WPushButton>("Kapat");
@@ -57,7 +58,11 @@ Wt::WDialog* ContainerWidget::createDialog(const std::string &title)
         wApp->removeChild(mDialog);
     });
 
-    return mDialog;
+    acceptBtn->clicked().connect([=](){
+        wApp->removeChild(mDialog);
+    });
+
+    return std::make_pair(mDialog,acceptBtn);
 }
 
 void ContainerWidget::removeDialog(Wt::WDialog *mDialog)
@@ -75,6 +80,7 @@ void ContainerWidget::showInfo(const std::string &message, const InfoType type)
     m_infoWidget->setPadding(15,AllSides);
     m_infoWidget->setContentAlignment(AlignmentFlag::Center);
     m_infoWidget->setMinimumSize(350,WLength::Auto);
+    m_infoWidget->setZIndex(1101);
 
     m_infoWidget->setPositionScheme(Wt::PositionScheme::Fixed);
 
@@ -95,7 +101,7 @@ void ContainerWidget::showInfo(const std::string &message, const InfoType type)
         break;
     }
 
-    Wt::WTimer::singleShot(std::chrono::seconds(4),[=](){
+    Wt::WTimer::singleShot(std::chrono::seconds(5),[=](){
         wApp->instance()->root()->removeWidget(m_infoWidget);
     });
 

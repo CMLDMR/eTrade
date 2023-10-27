@@ -7,6 +7,7 @@
 
 #include "HeaderInfo.h"
 #include "UserManager.h"
+#include "SliderManager.h"
 
 
 using namespace Wt;
@@ -35,13 +36,17 @@ void Admin::init()
     m_menuBar->addStyleClass(Bootstrap::Components::Buttons::group);
     m_menuBar->setMaximumSize(1280,WLength::Auto);
 
-    auto btnListUsers = createMenuButton("Kullanıcılar");
+    auto btnListUsers = createMenuButton(eCore::tr("Kullanıcılar"));
     btnListUsers->clicked().connect(this,&Admin::initUsers);
     m_menuBar->addWidget(std::move(btnListUsers));
 
-    auto btnHeaderInfo = createMenuButton("Üst Bilgiler");
+    auto btnHeaderInfo = createMenuButton(eCore::tr("Üst Bilgiler"));
     btnHeaderInfo->clicked().connect(this,&Admin::initHeaderInfo);
     m_menuBar->addWidget(std::move(btnHeaderInfo));
+
+    auto btnSliderInfo = createMenuButton(eCore::tr("Slider"));
+    btnSliderInfo->clicked().connect(this,&Admin::initSliderManager);
+    m_menuBar->addWidget(std::move(btnSliderInfo));
 }
 
 std::unique_ptr<WPushButton> Admin::createMenuButton(const eCore::Text &btnName)
@@ -65,6 +70,13 @@ void Admin::initHeaderInfo()
 
     m_contentContainer->addNew<HeaderInfo>(m_User);
 
+}
+
+void Admin::initSliderManager()
+{
+    m_contentContainer->clear();
+
+    m_contentContainer->addNew<SliderManager>(m_User);
 }
 
 } // namespace Account

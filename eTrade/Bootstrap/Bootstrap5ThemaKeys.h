@@ -81,6 +81,26 @@ inline const std::string hide_lg{"d-md-none d-lg-block "};
 inline const std::string hide_xl{"d-lg-none d-xl-block "};
 inline const std::string hide_xxl{"d-xl-none d-xxl-block "};
 }
+
+namespace Border {
+namespace Additive{
+inline const std::string border{"border"};
+inline const std::string border_top{"border-top"};
+inline const std::string border_end{"border-end"};
+inline const std::string border_bottom{"border-bottom"};
+inline const std::string border_start{"border-start"};
+}
+
+namespace Size {
+inline const std::string rounded_0{"rounded-0"};
+inline const std::string rounded_1{"rounded-1"};
+inline const std::string rounded_2{"rounded-2"};
+inline const std::string rounded_3{"rounded-3"};
+
+}
+
+}
+
 }
 
 

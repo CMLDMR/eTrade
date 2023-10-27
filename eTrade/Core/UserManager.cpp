@@ -1,4 +1,4 @@
-#include "Manager.h"
+#include "UserManager.h"
 
 namespace eCore {
 namespace User {

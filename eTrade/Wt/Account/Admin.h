@@ -24,6 +24,7 @@ private:
 
     void initUsers();
     void initHeaderInfo();
+    void initSliderManager();
 
     eCore::User::UserItem* m_User;
 };

@@ -62,6 +62,8 @@ public:
 
     std::string downloadFile(const std::string &fileOid , bool forceFilename = false);
     std::string downloadFileWeb( const std::string &fileOid , bool forceFilename = false );
+    std::string downloadFileWeb( const std::string &fileOid , const std::string &docroot , bool forceFilename = false );
+
     bsoncxx::types::bson_value::value uploadfile(const std::string &filepath );
 //    bsoncxx::types::bson_value::value uploadfile(std::string filepath ) const;
     bool deleteGridFS( const std::string &fileOid );

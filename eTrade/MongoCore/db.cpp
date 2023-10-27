@@ -356,6 +356,128 @@ std::string MongoCore::DB::downloadFileWeb(const std::string &fileOid, bool forc
     return fullFilename;
 }
 
+std::string MongoCore::DB::downloadFileWeb(const std::string &fileOid, const std::string &docroot, bool forceFilename)
+{
+    std::string file__Name{""};
+    bool fileDownloadedBefore=true;
+
+    auto filter = bsoncxx::builder::basic::document{};
+
+    try {
+        filter.append(bsoncxx::builder::basic::kvp("_id",bsoncxx::oid{fileOid}));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "\nLOG: " << e.what() << "\n";
+    }
+
+    auto val = this->mDB->collection("fs.files").find_one(filter.view());
+
+    if( val ){
+        std::filesystem::path file_info;
+        try {
+            file_info = std::filesystem::path(val.value().view()["filename"].get_string().value.data());
+        } catch (bsoncxx::exception &e) {
+            fileDownloadedBefore = false;
+        }
+        if( fileDownloadedBefore ){
+            if( forceFilename ){
+                file__Name = std::string("tempfile/")+file_info.stem().string()+file_info.extension().string();
+            }else{
+                file__Name = "tempfile/"+fileOid+file_info.extension().string();
+            }
+
+            if( std::filesystem::exists(docroot+"/"+file__Name) ){
+                std::cout << "\nFile Exist: " << file__Name << "\n";
+            }else{
+                std::cout << "\nFile NOT Exist: " << file__Name << "\n";
+                fileDownloadedBefore = false;
+            }
+        }
+    }else{
+        fileDownloadedBefore = false;
+    }
+
+    if( fileDownloadedBefore ){
+        return file__Name;
+    }
+
+    auto bucket = this->mDB->gridfs_bucket ();
+
+    auto doc = bsoncxx::builder::basic::document{};
+
+    try {
+        doc.append(bsoncxx::builder::basic::kvp("key",bsoncxx::oid{fileOid}));
+    } catch (bsoncxx::exception& e) {
+        std::string str = "Error: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what() ;
+        this->setLastError (str.c_str ());
+        return "";
+    }
+
+
+
+    mongocxx::gridfs::downloader downloader;
+    try {
+        auto roid = bsoncxx::types::bson_value::value(doc.view()["key"].get_oid());
+        downloader = bucket.open_download_stream(roid);
+    } catch (bsoncxx::exception &e) {
+        std::string str = "Error: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what() ;
+        this->setLastError (str.c_str ());
+        return "img/404-header.png";
+    }
+
+
+    auto file_length = downloader.file_length();
+
+
+    std::filesystem::path info( downloader.files_document()["filename"].get_string().value.data ());
+
+
+    std::string fullFilename;
+
+
+    if( !std::filesystem::exists(docroot+"/tempfile") ){
+        if( !std::filesystem::create_directory(docroot+"/tempfile") ){
+            std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " tempfile Can not Created";
+            this->setLastError (str);
+            return "";
+        }
+    }
+
+
+    if( forceFilename )
+    {
+        fullFilename = std::string("tempfile/")+downloader.files_document()["filename"].get_string().value.data ();
+    }else{
+        fullFilename = std::string("tempfile/")  +downloader.files_document()["_id"].get_oid().value.to_string() + info.extension().string();
+    }
+
+
+    if( std::filesystem::exists(docroot+"/"+fullFilename) )
+    {
+        return fullFilename;
+    }
+
+    auto buffer_size = std::min(file_length, static_cast<std::int64_t>(downloader.chunk_size()));
+    auto buffer = bsoncxx::stdx::make_unique<std::uint8_t[]>(static_cast<std::size_t>(buffer_size));
+
+    std::ofstream out;
+
+    out.open(docroot+"/"+fullFilename,std::ios::out | std::ios::app | std::ios::binary);
+
+    if( out.is_open() )
+    {
+        while ( auto length_read = downloader.read(buffer.get(), static_cast<std::size_t>(buffer_size)) ) {
+            auto bufferPtr = buffer.get();
+            out.write(reinterpret_cast<char*>(bufferPtr),length_read);
+        }
+        out.close();
+    }else{
+        std::string str = "Error Can Not Open File: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + fullFilename ;
+        this->setLastError (str);
+    }
+
+    return fullFilename;
+}
+
 bsoncxx::types::bson_value::value MongoCore::DB::uploadfile(const std::string &filepath)
 {
     auto bucket = this->db ()->gridfs_bucket ();

@@ -18,6 +18,10 @@ Panel::Panel(MongoCore::DB *mdb)
 void Panel::init()
 {
 
+    //TODO: Geliştirme Tamamlanınca Burası Kaldırılacak
+    this->addNew<Admin>(m_userItem);
+    return;
+
     auto loginWidget = addNew<Account::Login>(m_userItem);
 
     loginWidget->successLogin().connect([=](){
