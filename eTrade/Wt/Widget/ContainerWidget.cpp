@@ -58,10 +58,6 @@ std::pair<Wt::WDialog*,Wt::WPushButton*> ContainerWidget::createDialog(const std
         wApp->removeChild(mDialog);
     });
 
-    acceptBtn->clicked().connect([=](){
-        wApp->removeChild(mDialog);
-    });
-
     return std::make_pair(mDialog,acceptBtn);
 }
 

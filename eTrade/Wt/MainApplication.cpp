@@ -27,6 +27,8 @@ MainApplication::MainApplication(const WEnvironment &env)
 
     m_db = new MongoCore::DB(&m_dbmongocxx);
 
+    m_user = new eCore::User::UserItem(m_db);
+
     init();
 }
 
@@ -41,7 +43,7 @@ void MainApplication::init()
     auto m_headerContainer = root()->addNew<Header::Widget>(m_db);
 
 
-    auto body = root()->addNew<Body::Body>(m_db);
+    auto body = root()->addNew<Body::Body>(m_user);
 
     m_headerContainer->clickAccount().connect([=](){
         body->clear();

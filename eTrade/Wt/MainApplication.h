@@ -8,6 +8,7 @@
 
 #include <mongocxx/client.hpp>
 #include <mongocxx/database.hpp>
+#include <Core/User.h>
 
 
 #include "MongoCore/db.h"
@@ -38,6 +39,7 @@ private:
     mongocxx::database m_dbmongocxx;
 
     MongoCore::DB* m_db;
+    eCore::User::UserItem* m_user;
 };
 
 #endif // MAINAPPLICATION_H

@@ -62,7 +62,7 @@ FileUploaderWidget::FileUploaderWidget(const std::string &title)
 
             mFileLocation = std::string("tempfile/")+item.clientFileName();
             mFileAbsoluteLocation = wApp->docRoot()+"/"+mFileLocation;
-            std::filesystem::path hedefDosyaYolu(wApp->docRoot()+"/"+mFileLocation);
+            std::filesystem::path hedefDosyaYolu(mFileAbsoluteLocation);
 
             try {
                 std::filesystem::copy(dosyaYoluNesnesi,hedefDosyaYolu,std::filesystem::copy_options::overwrite_existing);

@@ -505,6 +505,7 @@ bsoncxx::types::bson_value::value MongoCore::DB::uploadfile(const std::string &f
         file.close();
 
         delete[] buffer;
+        return bsoncxx::types::bson_value::value(nullptr);
     }else{
         std::string str = "Error Can Not Open File: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + filepath ;
         this->setLastError (str);

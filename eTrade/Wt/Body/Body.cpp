@@ -9,15 +9,16 @@
 //#include "Wt/Body/LatestBlog.h"
 
 
+
 using namespace Wt;
 
-Body::Body::Body(MongoCore::DB* _db)
+Body::Body::Body(eCore::User::UserItem *mUser)
 {
 
 
 
 
-    auto slider = addNew<Slider>();
+    auto slider = addNew<Slider>(mUser);
 
 
     auto section = addNew<Section>();

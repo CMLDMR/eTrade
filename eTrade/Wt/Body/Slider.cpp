@@ -1,24 +1,24 @@
 #include "Slider.h"
-#include "Wt/WCssDecorationStyle.h"
+#include <Wt/WPushButton.h>
 #include <Wt/WText.h>
 #include <Wt/WVBoxLayout.h>
 #include "Bootstrap/inlinestyle.h"
+#include "Bootstrap/Bootstrap5ThemaKeys.h"
+#include "Wt/WApplication.h"
 
 using namespace Wt;
 
 namespace Body {
 
-Slider::Slider()
+Slider::Slider(eCore::User::UserItem *mUser)
+    :eCore::SliderManager(mUser)
 {
     init();
+    UpdateList();
 
-    //TODO: remove test code
-
-    addSlide("Natural Food Is Always Healthy","img/carousel-1.jpg");
-    addSlide("Natural Food Is Always Healthy","img/carousel-2.jpg");
 }
 
-void Slider::addSlide(const std::string &title, const std::string &backgroundImg)
+void Slider::addSlide(const std::string &title, const std::string &backgroundImg )
 {
 
     auto container = std::make_unique<WContainerWidget>();
@@ -41,9 +41,30 @@ void Slider::addSlide(const std::string &title, const std::string &backgroundImg
 
 void Slider::init()
 {
+
     clicked().connect([=](){
         setCurrentIndex((currentIndex()+1)%count());
     });
+
 }
 
 } // namespace Body
+
+
+void Body::Slider::errorOccured(const std::string &errorText)
+{
+}
+
+void Body::Slider::onList(const std::vector<eCore::Slider> &mlist)
+{
+//    clear();
+
+    //TODO: Slider Sekiyor ama ekran değişmiyor
+    int index = 0;
+    for( const auto &item : mlist ){
+        std::string title = item.value(eCore::Slider::Key::text).value().view().get_string().value.data();
+        auto imgUrl = downloadFileWeb(item.value(eCore::Slider::Key::imgOid).value().view().get_oid().value.to_string(),wApp->docRoot());
+        addSlide(title,imgUrl);
+    }
+
+}

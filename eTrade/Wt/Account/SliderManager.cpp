@@ -106,7 +106,6 @@ void SliderManager::uploadSlider()
     auto [mDialog,acceptbtn] = createDialog("Yeni Slide Ekle","Kaydet");
 
     mDialog->setWidth(720);
-    mDialog->show();
 
     auto m_img = mDialog->contents()->addNew<WImage>(WLink("img/carousel-1.jpg"));
     m_img->addStyleClass(Bootstrap::Grid::container_fluid);
@@ -131,12 +130,11 @@ void SliderManager::uploadSlider()
 
     m_fileUploader->Uploaded().connect([=](){
         m_img->setImageLink(WLink(m_fileUploader->fileLocation()));
-
-
     });
 
     acceptbtn->addStyleClass(Bootstrap::Components::Buttons::Outline::Primary);
     acceptbtn->clicked().connect([=](){
+
         if( m_fileUploader->isUploaded() ) {
 
             eCore::Slider item;
@@ -154,8 +152,13 @@ void SliderManager::uploadSlider()
                 showInfo(getLastError(),Widget::ContainerWidget::InfoType::error);
             }
             UpdateList();
+            wApp->removeChild(mDialog);
+        }else{
+            showInfo(getLastError(),Widget::ContainerWidget::InfoType::error);
         }
     });
+
+    mDialog->show();
 
 }
 
