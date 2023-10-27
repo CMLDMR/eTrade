@@ -27,6 +27,7 @@ UserItem::UserItem(UserItem *mUser)
 UserItem &UserItem::setType(const UserType type)
 {
     this->append(Key::type,bsoncxx::types::b_int32{static_cast<int>(type)});
+    m_userType = type;
     return *this;
 }
 

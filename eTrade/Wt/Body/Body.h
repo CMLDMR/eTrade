@@ -3,7 +3,7 @@
 
 #include <Wt/WContainerWidget.h>
 
-#include "MongoCore/db.h"
+#include <Core/User.h>
 
 
 
@@ -12,7 +12,7 @@ namespace Body {
 class Body : public Wt::WContainerWidget
 {
 public:
-    Body(MongoCore::DB *_db);
+    Body(eCore::User::UserItem *mUser );
 };
 
 

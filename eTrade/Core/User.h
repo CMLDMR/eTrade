@@ -29,6 +29,7 @@ public:
         Admin,
         Business,
         Client,
+        Public,
         Unknown = 99
     };
 
@@ -45,6 +46,7 @@ public:
 private:
 
     MongoCore::DB* m_db{nullptr};
+    UserType m_userType{UserType::Public};
 
 };
 

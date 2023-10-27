@@ -33,6 +33,15 @@ const BOOTSRAPTHEMEKEYS_EXPORT std::string full( const int index );
 
 
 namespace Components {
+
+namespace Carousel {
+inline const std::string carousel{"carousel "};
+inline const std::string slide{"slide "};
+inline const std::string carousel_indicators{"carousel-indicators "};
+inline const std::string carousel_inner{"carousel-inner"};
+
+}
+
 namespace Buttons{
 
 inline const std::string group{"btn-group "};
