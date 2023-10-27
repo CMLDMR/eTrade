@@ -17,7 +17,7 @@ public:
 
     Wt::WContainerWidget *footer();
 
-    Wt::WDialog* createDialog(const std::string &title );
+    std::pair<Wt::WDialog*,Wt::WPushButton*> createDialog(const std::string &title , const std::string &acceptBtnName = "Tamam");
     void removeDialog( Wt::WDialog* mDialog );
 
     enum class InfoType {

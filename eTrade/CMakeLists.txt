@@ -40,8 +40,9 @@ add_library(eCore SHARED
     Core/Language.h Core/Language.cpp
     Core/Text.h Core/Text.cpp
     Core/User.h Core/User.cpp
-    Core/Manager.h Core/Manager.cpp
+    Core/UserManager.h Core/UserManager.cpp
     Core/MainHeaderInfo.h Core/MainHeaderInfo.cpp
+    Core/Slider.h Core/Slider.cpp
 )
 target_compile_definitions(eCore PRIVATE ECORE_LIBRARY)
 
@@ -94,6 +95,7 @@ add_executable(eTrade
     Wt/Account/UserManager.h Wt/Account/UserManager.cpp
     Wt/Widget/ContainerWidget.h Wt/Widget/ContainerWidget.cpp
     ../docroot/css/informer.css
+    Wt/Account/SliderManager.h Wt/Account/SliderManager.cpp
 )
 
 

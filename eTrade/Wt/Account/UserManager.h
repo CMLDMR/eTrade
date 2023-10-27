@@ -3,7 +3,7 @@
 
 #include "../Widget/ContainerWidget.h"
 #include <Wt/WTableView.h>
-#include "Core/Manager.h"
+#include "Core/UserManager.h"
 
 
 namespace Account {

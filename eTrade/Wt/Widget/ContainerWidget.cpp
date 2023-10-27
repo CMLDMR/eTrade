@@ -46,9 +46,10 @@ Wt::WContainerWidget *ContainerWidget::footer()
     return m_footerWidget;
 }
 
-Wt::WDialog* ContainerWidget::createDialog(const std::string &title)
+std::pair<Wt::WDialog*,Wt::WPushButton*> ContainerWidget::createDialog(const std::string &title, const std::string &acceptBtnName )
 {
     auto mDialog = wApp->addChild(std::make_unique<Wt::WDialog>(title));
+    auto acceptBtn = mDialog->footer()->addNew<Wt::WPushButton>("Kaydet");
 
 
     auto closeBtn = mDialog->footer()->addNew<Wt::WPushButton>("Kapat");
@@ -57,7 +58,11 @@ Wt::WDialog* ContainerWidget::createDialog(const std::string &title)
         wApp->removeChild(mDialog);
     });
 
-    return mDialog;
+    acceptBtn->clicked().connect([=](){
+        wApp->removeChild(mDialog);
+    });
+
+    return std::make_pair(mDialog,acceptBtn);
 }
 
 void ContainerWidget::removeDialog(Wt::WDialog *mDialog)

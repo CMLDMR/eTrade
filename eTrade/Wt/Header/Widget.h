@@ -65,6 +65,7 @@ private:
     Wt::WText* m_addressText{nullptr};
     Wt::WContainerWidget* m_addressTextContainer{nullptr};
 
+    //TODO: bilgileri gizleme/gösterme Eklenecek
     Wt::WText* m_mailAddressText{nullptr};
     Wt::WAnchor* m_mailAnchor{nullptr};
     Wt::WAnchor* m_facebookAnchor{nullptr};
