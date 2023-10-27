@@ -22,18 +22,23 @@ void Slider::addSlide(const std::string &title, const std::string &backgroundImg
 {
 
     auto container = std::make_unique<WContainerWidget>();
+    container->setContentAlignment(AlignmentFlag::Center);
+    container->setPositionScheme(PositionScheme::Relative);
 
-    container->setAttributeValue(Style::style,Style::background::url(backgroundImg)+
-                                                   Style::background::size::cover+
-                                                   Style::background::repeat::norepeat);
+    auto img = container->addNew<WImage>(WLink(backgroundImg));
+    img->setHeight(480);
 
+    auto layoutContainer = container->addNew<WContainerWidget>();
+    layoutContainer->setPositionScheme(PositionScheme::Absolute);
+    layoutContainer->setWidth(WLength("100%"));
+    layoutContainer->setHeight(WLength("100%"));
+    layoutContainer->setOffsets(0,Side::Top|Side::Bottom);
 
-    auto layout = container->setLayout(std::make_unique<WVBoxLayout>());
+    auto layout = layoutContainer->setLayout(std::make_unique<WVBoxLayout>());
     layout->addStretch(1);
     auto titleText = layout->addWidget(std::make_unique<WText>("<h1>"+title+"</h1>"));
     titleText->setTextAlignment(AlignmentFlag::Center);
     layout->addStretch(1);
-    container->setHeight(650);
 
     insertWidget(0,std::move(container));
 
