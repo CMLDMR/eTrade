@@ -96,6 +96,7 @@ add_executable(eTrade
     Wt/Widget/ContainerWidget.h Wt/Widget/ContainerWidget.cpp
     ../docroot/css/informer.css
     Wt/Account/SliderManager.h Wt/Account/SliderManager.cpp
+    Wt/Widget/FileUploaderWidget.h Wt/Widget/FileUploaderWidget.cpp
 )
 
 

@@ -80,6 +80,7 @@ void ContainerWidget::showInfo(const std::string &message, const InfoType type)
     m_infoWidget->setPadding(15,AllSides);
     m_infoWidget->setContentAlignment(AlignmentFlag::Center);
     m_infoWidget->setMinimumSize(350,WLength::Auto);
+    m_infoWidget->setZIndex(1101);
 
     m_infoWidget->setPositionScheme(Wt::PositionScheme::Fixed);
 
@@ -100,7 +101,7 @@ void ContainerWidget::showInfo(const std::string &message, const InfoType type)
         break;
     }
 
-    Wt::WTimer::singleShot(std::chrono::seconds(4),[=](){
+    Wt::WTimer::singleShot(std::chrono::seconds(5),[=](){
         wApp->instance()->root()->removeWidget(m_infoWidget);
     });
 

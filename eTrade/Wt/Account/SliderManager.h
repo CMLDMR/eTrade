@@ -21,7 +21,9 @@ public:
     SliderManager( eCore::User::UserItem* _mUserItem );
 
 private:
-    void addSlider();
+    void addSlider( const std::string &path ,
+                   const std::string &title,
+                   const std::string &altText);
 
     void init();
     void initControlPanel();

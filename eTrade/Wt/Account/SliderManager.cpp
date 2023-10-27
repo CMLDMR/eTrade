@@ -1,12 +1,15 @@
 #include "SliderManager.h"
 #include "Bootstrap/inlinestyle.h"
 #include "Bootstrap/Bootstrap5ThemaKeys.h"
-#include "Wt/WVBoxLayout.h"
 
+#include "Wt/Widget/FileUploaderWidget.h"
+
+#include <Wt/WVBoxLayout.h>
 #include <Wt/WText.h>
 #include <Wt/WImage.h>
 #include <Wt/WHBoxLayout.h>
 #include <Wt/WPushButton.h>
+#include <Wt/WLineEdit.h>
 
 using namespace Wt;
 
@@ -49,13 +52,14 @@ SliderManager::SliderManager(eCore::User::UserItem *_mUserItem)
     init();
 }
 
-void SliderManager::addSlider()
+void SliderManager::addSlider(const std::string &path, const std::string &title, const std::string &altText)
 {
     using eCore::Slider;
 
     Slider slider;
-    slider.setValue(Slider::Key::text,"Slider Text Message");
-    slider.setValue(Slider::Key::imgUrl,"img/carousel-1.jpg");
+    slider.setValue(Slider::Key::text,title);
+    slider.setValue(Slider::Key::imgUrl,path);
+//    slider.setValue(Slider::Key::,"img/carousel-1.jpg");
 
 
 
@@ -75,10 +79,10 @@ void SliderManager::init()
 {
     setLimit(8);
     initControlPanel();
-    addSlider();
-    addSlider();
-    addSlider();
-    addSlider();
+    addSlider("img/carousel-1.jpg","sd","55");
+    addSlider("img/carousel-1.jpg","sdf","df");
+    addSlider("img/carousel-1.jpg","dsfg","sdf");
+    addSlider("img/carousel-1.jpg","dfgdzxf","sdf");
 }
 
 void SliderManager::initControlPanel()
@@ -94,18 +98,42 @@ void SliderManager::initControlPanel()
 void SliderManager::uploadSlider()
 {
     auto [mDialog,acceptbtn] = createDialog("Yeni Slide Ekle","Kaydet");
+
+    mDialog->setWidth(720);
     mDialog->show();
 
     using eCore::Slider;
 
-    Slider slider;
-    slider.setValue(Slider::Key::text,"Slider Test Message");
-    slider.setValue(Slider::Key::imgUrl,"img/carousel-1.jpg");
+    auto m_img = mDialog->contents()->addNew<WImage>(WLink("img/carousel-1.jpg"));
+    m_img->addStyleClass(Bootstrap::Grid::container_fluid);
+    m_img->setHeight(320);
+    m_img->setMargin(10,Side::Bottom);
 
-    mDialog->contents()->addNew<SliderThumbs>(slider);
+    auto m_titleLineEdit = mDialog->contents()->addNew<WLineEdit>();
+    m_titleLineEdit->setPlaceholderText("Slide Başlığını Giriniz");
+    m_titleLineEdit->addStyleClass(Bootstrap::Grid::container_fluid);
+    m_titleLineEdit->setMargin(5,AllSides);
 
+
+    auto m_altTextLineEdit = mDialog->contents()->addNew<WLineEdit>();
+    m_altTextLineEdit->setPlaceholderText("Slide Açıklamasını Giriniz");
+    m_altTextLineEdit->addStyleClass(Bootstrap::Grid::container_fluid);
+    m_altTextLineEdit->setMargin(5,AllSides);
+
+
+    auto m_fileUploader = mDialog->contents()->addNew<Widget::FileUploaderWidget>();
+    m_fileUploader->addStyleClass(Bootstrap::Grid::container_fluid);
+    m_fileUploader->setMargin(5,AllSides);
+
+    m_fileUploader->Uploaded().connect([=](){
+        m_img->setImageLink(WLink(m_fileUploader->fileLocation()));
+    });
+
+    acceptbtn->addStyleClass(Bootstrap::Components::Buttons::Outline::Primary);
     acceptbtn->clicked().connect([=](){
-        addSlider();
+        if( m_fileUploader->isUploaded() ) {
+            addSlider(m_fileUploader->fileLocation(),m_titleLineEdit->text().toUTF8(),m_altTextLineEdit->text().toUTF8());
+        }
     });
 
 }
