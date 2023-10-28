@@ -20,6 +20,12 @@ Text::Text(const std::string &str)
 
 }
 
+Text::Text(const std::string_view &str_view)
+    :m_text(str_view)
+{
+
+}
+
 Text::Text(const char *str)
     :m_text(str)
 {
@@ -52,6 +58,7 @@ const std::string tr(const std::string &str)
 {
     return eCore::Text(str).text();
 }
+
 
 } // namespace eCore
 

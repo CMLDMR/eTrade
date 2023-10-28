@@ -4,9 +4,7 @@
 #include "Core/Core_global.h"
 
 #include <string>
-
-//#define TR(x)   eCore::Text(x).text()
-
+#include <string_view>
 
 
 namespace eCore {
@@ -16,10 +14,10 @@ const ECORE_EXPORT std::string  tr( const std::string &str );
 class ECORE_EXPORT Text
 {
 public:
-//    Text();
     Text( const Text &other );
 
     Text( const std::string &str );
+    Text( const std::string_view &str_view );
     Text( const char* str );
 
     Text operator=( const Text &other );
