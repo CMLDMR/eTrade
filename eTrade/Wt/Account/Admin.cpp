@@ -89,7 +89,8 @@ void Admin::initSliderManager()
 void Admin::initProductManager()
 {
     m_contentContainer->clear();
-    m_contentContainer->addNew<ProductManager>(m_User);
+    auto m_productManager = m_contentContainer->addNew<ProductManager>(m_User);
+    m_productManager->init();
 }
 
 void Admin::initCategoryManager()

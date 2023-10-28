@@ -40,6 +40,8 @@ public:
 
     const eCore::Category &at( const int index ) const;
 
+    int size() const;
+
     // WAbstractItemModel interface
 public:
     virtual int rowCount(const Wt::WModelIndex &parent) const override;

@@ -23,7 +23,9 @@ Body::Body::Body(eCore::User::UserItem *mUser)
 
     auto section = addNew<Section>();
     auto feature = addNew<Feature>();
-    auto product = addNew<Product>();
+    auto m_productManager = addNew<Product>(mUser);
+    m_productManager->init();
+
     //TODO: Daha sonra bakilacak
     //    auto visitor = root()->addNew<Body::Visitor>();
     //    auto customer = root()->addNew<Body::CustomerReview>();

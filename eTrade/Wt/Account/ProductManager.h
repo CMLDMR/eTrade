@@ -15,25 +15,28 @@ class ProductManager : public Widget::ContainerWidget, public eCore::ProductMana
 {
 public:
     ProductManager( eCore::User::UserItem* mUser );
+    virtual void init();
 
     std::shared_ptr<CategoryModel> createCategoryModel();
 
+    virtual void addProduct( const eCore::Product &item );
 
     // DB interface
 public:
     virtual void errorOccured(const std::string &errorText) override;
 
-    // ProductManager interface
+    // eCore::ProductManager interface
 public:
     virtual void onList(const std::vector<eCore::Product> &mlist) override;
 
 private:
 
-    void init();
-    void initHeader();
+    virtual void initHeader();
 
     void addNewProduct();
     eCore::CategoryManager* m_categoryManager;
+
+
 
 
 

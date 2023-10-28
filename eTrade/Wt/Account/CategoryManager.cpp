@@ -127,6 +127,11 @@ const eCore::Category &Account::CategoryModel::at(const int index) const
     return m_categoryList.at(index);
 }
 
+int Account::CategoryModel::size() const
+{
+    return m_categoryList.size();
+}
+
 int Account::CategoryModel::rowCount(const Wt::WModelIndex &parent) const
 {
     return m_categoryList.size();
