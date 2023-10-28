@@ -37,6 +37,7 @@ private:
     eCore::CategoryManager* m_categoryManager;
 
     void changeProduct( const eCore::Product &product );
+    void deleteProduct( const std::string &oid , const std::string &imgOid );
 
 
 

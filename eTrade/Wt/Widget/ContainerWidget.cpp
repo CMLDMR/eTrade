@@ -67,6 +67,25 @@ void ContainerWidget::removeDialog(Wt::WDialog *mDialog)
     wApp->removeChild(mDialog);
 }
 
+std::pair<Wt::WDialog*,Wt::WPushButton*> ContainerWidget::askDialog(const std::string &message)
+{
+    auto mDialog = wApp->addChild(std::make_unique<Wt::WDialog>());
+    auto acceptBtn = mDialog->footer()->addNew<Wt::WPushButton>("Evet");
+
+    mDialog->setTitleBarEnabled( false );
+    mDialog->contents()->addNew<WText>( message );
+
+    auto closeBtn = mDialog->footer()->addNew<Wt::WPushButton>("Hayır");
+
+    closeBtn->clicked().connect([=](){
+        wApp->removeChild(mDialog);
+    });
+
+    mDialog->show();
+
+    return std::make_pair(mDialog,acceptBtn);
+}
+
 void ContainerWidget::showInfo(const std::string &message, const InfoType type)
 {
     //TODO: remove if time finished
