@@ -1,5 +1,6 @@
 #include "ProductManager.h"
 #include "Wt/Account/CategoryManager.h"
+#include "Wt/WVBoxLayout.h"
 
 #include <Wt/WApplication.h>
 #include <Wt/WHBoxLayout.h>
@@ -17,7 +18,6 @@
 #include <Wt/Widget/FileUploaderWidget.h>
 
 #include <bsoncxx/oid.hpp>
-#include <any>
 
 
 using namespace Wt;
@@ -45,15 +45,70 @@ std::shared_ptr<CategoryModel> ProductManager::createCategoryModel()
 
 void Account::ProductManager::errorOccured(const std::string &errorText)
 {
+    showInfo( errorText , Widget::ContainerWidget::InfoType::error );
 }
 
 void Account::ProductManager::onList(const std::vector<eCore::Product> &mlist)
 {
+    content()->clear();
+
+    for( const auto &item : mlist ) {
+        auto rcontainer = content()->addNew<WContainerWidget>();
+        rcontainer->addStyleClass( Bootstrap::Grid::full( 3 ) );
+        rcontainer->setMargin( 10 , Side::Bottom );
+
+        auto container = rcontainer->addNew<WContainerWidget>();
+        container->addStyleClass(Bootstrap::Utilities::Background::bg_primary+
+                                 Bootstrap::Utilities::Background::bg_light+
+                                 Bootstrap::Utilities::Shadow::shadow_lg);
+
+        auto m_vLayout = container->setLayout(std::make_unique<WVBoxLayout>());
+
+        auto m_imgOid = item.value(eCore::Product::Key::imgOid);
+        if( m_imgOid ) {
+            auto m_imgUrl = downloadFileWeb(m_imgOid.value().view().get_oid().value.to_string(),wApp->docRoot());
+            auto m_img = m_vLayout->addWidget(std::make_unique<WImage>(WLink(m_imgUrl)));
+            m_img->setHeight(250);
+            m_img->setWidth(WLength::Auto);
+        }
+        else {
+            auto m_img = m_vLayout->addWidget(std::make_unique<WImage>(WLink("img/imgerror.jpg")));
+            m_img->setHeight(250);
+            m_img->setWidth(WLength::Auto);
+        }
+        auto m_titleVal = item.value(eCore::Product::Key::urunAdi);
+        if( m_titleVal ) {
+            auto m_titleText = m_vLayout->addWidget(std::make_unique<WText>(m_titleVal.value().view().get_string().value.data()));
+        }
+        else {
+            m_vLayout->addWidget(std::make_unique<WText>(item.errorStr()));
+        }
+
+        auto m_catVal = item.value(eCore::Product::Key::category);
+        if( m_catVal ) {
+            auto m_catText = m_vLayout->addWidget(std::make_unique<WText>(m_catVal.value().view().get_string().value.data()));
+        }
+        else {
+            m_vLayout->addWidget(std::make_unique<WText>(item.errorStr()));
+        }
+
+        auto m_priceVal = item.value(eCore::Product::Key::price);
+        if( m_priceVal ) {
+            auto m_priceText = m_vLayout->addWidget(std::make_unique<WText>(WString("{1} TL").arg(m_priceVal.value().view().get_double().value)));
+        }
+        else {
+            m_vLayout->addWidget(std::make_unique<WText>(item.errorStr()));
+        }
+
+
+    }
 }
 
 void Account::ProductManager::init()
 {
     initHeader();
+
+    UpdateList();
 }
 
 void Account::ProductManager::initHeader()
