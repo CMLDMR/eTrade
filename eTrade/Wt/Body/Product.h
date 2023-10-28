@@ -1,28 +1,23 @@
 #ifndef BODY_PRODUCT_H
 #define BODY_PRODUCT_H
 
-#include <Wt/WContainerWidget.h>
 
+#include <Wt/Account/ProductManager.h>
+#include <Wt/Widget/ContainerWidget.h>
 #include <memory.h>
 
 namespace Body {
 
-class Product : public Wt::WContainerWidget
+class Product : public Account::ProductManager
 {
 public:
-    Product();
+    Product( eCore::User::UserItem* mUser );
+    virtual void init() override;
 
 private:
-    void init();
 
-    void initHeader();
+    virtual void initHeader() override;
 
-    std::unique_ptr<Wt::WContainerWidget> addProduct( const std::string &name,
-                    const double price,
-                    const double oldPrice,
-                    const std::string &productUrl );
-
-    Wt::WContainerWidget* m_ProductContainer{nullptr};
 };
 
 } // namespace Body

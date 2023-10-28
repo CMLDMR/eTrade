@@ -13,12 +13,13 @@ namespace Widget {
 
 ContainerWidget::ContainerWidget()
 {
+    addStyleClass(Bootstrap::Grid::container_fluid);
     setContentAlignment(Wt::AlignmentFlag::Center);
 
     m_headerWidget = addNew<Wt::WContainerWidget>();
     m_headerWidget->setContentAlignment(Wt::AlignmentFlag::Center);
     m_headerWidget->setMaximumSize(1280,Wt::WLength::Auto);
-    m_headerWidget->addStyleClass(Bootstrap::Grid::container_fluid);
+    m_headerWidget->addStyleClass(Bootstrap::Grid::row);
 
 
     m_contentWidget = addNew<Wt::WContainerWidget>();

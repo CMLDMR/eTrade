@@ -45,7 +45,7 @@ void MainApplication::init()
 
     auto body = root()->addNew<Body::Body>(m_user);
 
-    m_headerContainer->clickAccount().connect([=](){
+    m_headerContainer->clickAccount().connect([=, this](){
         body->clear();
         body->addNew<Account::Panel>(m_db);
     });
