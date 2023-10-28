@@ -95,13 +95,15 @@ void ProductManager::addProduct(const eCore::Product &item)
 
     auto m_viewDetailsBtn = m_btnController->addNew<WPushButton>(eCore::tr("Değiştir"));
     m_viewDetailsBtn->addStyleClass(Bootstrap::Grid::full(6)+Bootstrap::Components::Buttons::Normal::Secondary+Bootstrap::Components::Buttons::Size::Small);
-    m_btnController->clicked().connect([=,this](){
+    m_viewDetailsBtn->clicked().connect([=,this](){
         this->changeProduct(item);
     });
 
     auto m_addToCartbtn = m_btnController->addNew<WPushButton>(eCore::tr("Sil"));
     m_addToCartbtn->addStyleClass(Bootstrap::Grid::full(6)+Bootstrap::Components::Buttons::Normal::Secondary+Bootstrap::Components::Buttons::Size::Small);
-
+    m_addToCartbtn->clicked().connect([=,this](){
+        this->deleteProduct(item.oid().value().to_string(),item.value(eCore::Product::Key::imgOid).value().view().get_oid().value.to_string());
+    });
     //BUG:  Zaman dönüşümü hatalı çalışıyor
     auto epochTime = item.value(eCore::Product::Key::lastUpdateTime).value().view().get_int64().value;
     WDateTime dateTime((std::chrono::system_clock::from_time_t(epochTime)));
@@ -408,4 +410,27 @@ void Account::ProductManager::changeProduct(const eCore::Product &product)
 
 
     mDialog->show();
+}
+
+void Account::ProductManager::deleteProduct( const std::string &oid, const std::string &imgOid )
+{
+    auto [mDialog,acceptBtn] = askDialog(eCore::tr("Silmek İstediğinize Emin misiniz?"));
+
+    acceptBtn->clicked().connect([=, this](){
+        if( deleteGridFS( imgOid ) ){
+            eCore::Product filter;
+            filter.setOid( oid );
+            if( DeleteItem( filter ) ) {
+                removeDialog(mDialog);
+                showInfo("Silindi");
+                UpdateList();
+            }
+            else{
+                showInfo( "Resim Silindi Ancak Item Silinemedi" , Widget::ContainerWidget::InfoType::error );
+            }
+        }
+        else{
+            showInfo( "Resim Silinemedi" , Widget::ContainerWidget::InfoType::error );
+        }
+    });
 }
