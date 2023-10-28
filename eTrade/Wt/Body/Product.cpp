@@ -10,6 +10,7 @@
 #include <Wt/WPushButton.h>
 
 #include "Wt/Account/CategoryManager.h"
+#include "Wt/Widget/Text.h"
 
 using namespace Wt;
 
@@ -74,3 +75,66 @@ void Product::initHeader()
 
 } // namespace Body
 
+
+
+
+void Body::Product::addProduct(const eCore::Product &item)
+{
+    auto rcontainer = content()->addNew<WContainerWidget>();
+    rcontainer->addStyleClass( Bootstrap::Grid::full( 3 ) );
+    rcontainer->setMargin( 10 , Side::Bottom );
+
+    auto container = rcontainer->addNew<WContainerWidget>();
+    container->addStyleClass(Bootstrap::Utilities::Background::bg_primary+
+                             Bootstrap::Utilities::Background::bg_light+
+                             Bootstrap::Utilities::Shadow::shadow_lg);
+
+    auto m_vLayout = container->setLayout(std::make_unique<WVBoxLayout>());
+
+    auto m_imgOid = item.value(eCore::Product::Key::imgOid);
+    if( m_imgOid ) {
+        auto m_imgUrl = downloadFileWeb(m_imgOid.value().view().get_oid().value.to_string(),wApp->docRoot());
+        auto m_img = m_vLayout->addWidget(std::make_unique<WImage>(WLink(m_imgUrl)));
+        m_img->setHeight(250);
+        m_img->setWidth(WLength::Auto);
+    }
+    else {
+        auto m_img = m_vLayout->addWidget(std::make_unique<WImage>(WLink("img/imgerror.jpg")));
+        m_img->setHeight(250);
+        m_img->setWidth(WLength::Auto);
+    }
+    auto m_titleVal = item.value(eCore::Product::Key::urunAdi);
+    if( m_titleVal ) {
+        auto m_titleText = m_vLayout->addWidget(std::make_unique<WText>(m_titleVal.value().view().get_string().value.data()));
+    }
+    else {
+        m_vLayout->addWidget(std::make_unique<WText>(item.errorStr()));
+    }
+
+    auto m_catVal = item.value(eCore::Product::Key::category);
+    if( m_catVal ) {
+        auto m_catText = m_vLayout->addWidget(std::make_unique<WText>(m_catVal.value().view().get_string().value.data()));
+    }
+    else {
+        m_vLayout->addWidget(std::make_unique<WText>(item.errorStr()));
+    }
+
+    auto m_priceVal = item.value(eCore::Product::Key::price);
+    if( m_priceVal ) {
+        auto m_priceText = m_vLayout->addWidget(std::make_unique<WText>(WString("{1} TUUL").arg(m_priceVal.value().view().get_double().value)));
+    }
+    else {
+        m_vLayout->addWidget(std::make_unique<WText>(item.errorStr()));
+    }
+
+    auto m_btnController = m_vLayout->addWidget(std::make_unique<WContainerWidget>());
+    m_btnController->addStyleClass(Bootstrap::Grid::row+Bootstrap::Components::Buttons::group);
+
+    auto m_viewDetailsBtn = m_btnController->addNew<WPushButton>(eCore::tr("Detay"));
+    m_viewDetailsBtn->addStyleClass(Bootstrap::Grid::full(6)+Bootstrap::Components::Buttons::Outline::Danger+Bootstrap::Components::Buttons::Size::Small);
+
+    auto m_addToCartbtn = m_btnController->addNew<WPushButton>(eCore::tr("Sepete Ekle"));
+    m_addToCartbtn->addStyleClass(Bootstrap::Grid::full(6)+Bootstrap::Components::Buttons::Outline::Success+Bootstrap::Components::Buttons::Size::Small);
+
+
+}

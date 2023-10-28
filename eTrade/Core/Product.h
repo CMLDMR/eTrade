@@ -41,8 +41,6 @@ class ECORE_EXPORT ProductManager : public MongoCore::ListItem<Product>
 public:
     ProductManager( eCore::User::UserItem* mUser );
 
-    long long secondsSinceEpoch();
-
 private:
     User::UserItem* m_User;
 
