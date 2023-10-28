@@ -105,14 +105,31 @@ inline const std::string rounded_0{"rounded-0"};
 inline const std::string rounded_1{"rounded-1"};
 inline const std::string rounded_2{"rounded-2"};
 inline const std::string rounded_3{"rounded-3"};
-
 }
 
 }
 
+namespace Background {
+
+inline const std::string gradient{"bg-gradient "};
+inline const std::string bg_primary{"bg-primary "};
+inline const std::string bg_secondary{"bg-secondary "};
+inline const std::string bg_success{"bg-success "};
+inline const std::string bg_danger{"bg-danger "};
+inline const std::string bg_warning{"bg-warning "};
+inline const std::string bg_info{"bg-info "};
+inline const std::string bg_light{"bg-light "};
+inline const std::string bg_dark{"bg-dark "};
+}
+
+namespace Shadow {
+inline const std::string shadow_sm{"shadow-sm "};
+inline const std::string shadow{"shadow "};
+inline const std::string shadow_lg{"shadow-lg "};
 }
 
 
+}
 }
 
 

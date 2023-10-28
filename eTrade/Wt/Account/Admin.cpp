@@ -8,6 +8,8 @@
 #include "HeaderInfo.h"
 #include "UserManager.h"
 #include "SliderManager.h"
+#include "ProductManager.h"
+#include "CategoryManager.h"
 
 
 using namespace Wt;
@@ -47,6 +49,15 @@ void Admin::init()
     auto btnSliderInfo = createMenuButton(eCore::tr("Slider"));
     btnSliderInfo->clicked().connect(this,&Admin::initSliderManager);
     m_menuBar->addWidget(std::move(btnSliderInfo));
+
+    auto btnCatManager = createMenuButton(eCore::tr("Category"));
+    btnCatManager->clicked().connect(this,&Admin::initCategoryManager);
+    m_menuBar->addWidget(std::move(btnCatManager));
+
+    auto btnProductManager = createMenuButton(eCore::tr("Product"));
+    btnProductManager->clicked().connect(this,&Admin::initProductManager);
+    m_menuBar->addWidget(std::move(btnProductManager));
+
 }
 
 std::unique_ptr<WPushButton> Admin::createMenuButton(const eCore::Text &btnName)
@@ -59,24 +70,32 @@ std::unique_ptr<WPushButton> Admin::createMenuButton(const eCore::Text &btnName)
 
 void Admin::initUsers()
 {
-
     m_contentContainer->clear();
-    auto m_userManager = m_contentContainer->addNew<UserManager>(m_User->db());
+    m_contentContainer->addNew<UserManager>(m_User->db());
 }
 
 void Admin::initHeaderInfo()
 {
     m_contentContainer->clear();
-
     m_contentContainer->addNew<HeaderInfo>(m_User);
-
 }
 
 void Admin::initSliderManager()
 {
     m_contentContainer->clear();
-
     m_contentContainer->addNew<SliderManager>(m_User);
+}
+
+void Admin::initProductManager()
+{
+    m_contentContainer->clear();
+    m_contentContainer->addNew<ProductManager>(m_User);
+}
+
+void Admin::initCategoryManager()
+{
+    m_contentContainer->clear();
+    m_contentContainer->addNew<CategoryManager>(m_User);
 }
 
 } // namespace Account

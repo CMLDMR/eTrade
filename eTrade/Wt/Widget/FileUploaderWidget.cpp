@@ -29,25 +29,25 @@ FileUploaderWidget::FileUploaderWidget(const std::string &title)
     auto progresBar = fileUploaderContainer->addWidget(std::make_unique<WProgressBar>());
     mFileUploader->setFileTextSize(6000); // Set the maximum file size to 2048 kB.
     mFileUploader->setMargin(10, Wt::Side::Right);
-    mFileUploader->setFilters("application/pdf");
+    // mFileUploader->setFilters("application/img");
     mFileUploader->setMultiple(false);
     mFileUploader->setProgressBar(progresBar);
-
-    mFileUploader->fileTooLarge().connect([=] {
+    mFileUploader->fileTooLarge().connect([=, this] {
         this->showInfo("Dosya Boyutu Fazla Büyük. Max: 6MB Olmalı",ContainerWidget::InfoType::error);
     });
 
     Wt::WPushButton *uploadButton = fileUploaderContainer->addWidget(std::make_unique<Wt::WPushButton>(title));
+    uploadButton->addStyleClass(Bootstrap::Components::Buttons::Outline::Primary+Bootstrap::Components::Buttons::Size::Small);
     uploadButton->setMargin(10, Wt::Side::Left | Wt::Side::Right);
 
-    uploadButton->clicked().connect([=] {
+    uploadButton->clicked().connect([=, this] {
         mFileUploader->progressBar()->setValue(0);
         mFileUploader->upload();
         mFileUploader->enable();
         mFileUploader->setHidden(false);
     });
 
-    mFileUploader->uploaded().connect([=] {
+    mFileUploader->uploaded().connect([=, this] {
 
         auto list = mFileUploader->uploadedFiles();
 

@@ -27,23 +27,10 @@ class FindOptions;
 class MONGOCORE_EXPORT DB
 {
 public:
-    explicit DB();
-//    DB( const DB &db);
-//    DB( DB&& other );
     explicit DB( mongocxx::database* _db );
     explicit DB( DB* _db );
-//    explicit DB( const DB* _db );
-//    virtual ~DB();
-
-//    DB& operator=(const DB& otherDB);
-//    DB& operator=( DB&& otherDB );
-//    DB& operator=( mongocxx::database* _db );
 
     static void instance( const std::string &mUri );
-
-
-
-
 
     const DB* getDB() const {
         return this;
@@ -53,10 +40,7 @@ public:
         return this;
     }
 
-
     virtual void errorOccured( const std::string& errorText );
-
-
 
     mongocxx::database* db();
 
@@ -65,7 +49,6 @@ public:
     std::string downloadFileWeb( const std::string &fileOid , const std::string &docroot , bool forceFilename = false );
 
     bsoncxx::types::bson_value::value uploadfile(const std::string &filepath );
-//    bsoncxx::types::bson_value::value uploadfile(std::string filepath ) const;
     bool deleteGridFS( const std::string &fileOid );
 
     mongocxx::stdx::optional<mongocxx::result::insert_one> insertItem(const Item &item);

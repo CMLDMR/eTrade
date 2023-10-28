@@ -23,9 +23,9 @@ std::string Slider::keyToString(const Key key)
 Slider::Key Slider::stringToKey(const std::string &string)
 {
     auto m_key = magic_enum::enum_cast<Key>(string);
-    if( m_key.has_value() ) {
+    if( m_key.has_value() )
         return m_key.value();
-    }
+
     return Key::unKnown;
 }
 

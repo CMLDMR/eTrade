@@ -10,33 +10,9 @@
 #include <mongocxx/pool.hpp>
 #include <mongocxx/instance.hpp>
 
-static int DBConnectionCount = 0;
-
-MongoCore::DB::DB()
-{
-
-
-
-}
-
-//MongoCore::DB::DB(const DB &db)
-//    :mDB(db.mDB)
-//{
-//    //    std::cout << "DB::DB(const DB &db): " << DBConnectionCount << std::endl;
-//    mConstructWithNewClient = false;
-//}
-
-//MongoCore::DB::DB(MongoCore::DB &&other)
-//    :mDB(other.mDB)
-//{
-//    //    std::cout << "DB::DB(DB &&db): " << DBConnectionCount << std::endl;
-//    mConstructWithNewClient = false;
-//}
-
 MongoCore::DB::DB(mongocxx::database *_db)
     :mDB( _db )
 {
-    //    std::cout << "DB::DB(mongocxx::database *_db): " << DBConnectionCount << std::endl;
     mConstructWithNewClient = false;
 }
 
@@ -47,58 +23,12 @@ void MongoCore::DB::instance(const std::string &mUri)
 
 MongoCore::DB::DB(DB *_db) : mDB(_db->db ())
 {
-    //    std::cout << "DB::DB(DB *_db): " << DBConnectionCount << std::endl;
     mConstructWithNewClient = false;
 }
 
-//MongoCore::DB::DB(const DB *_db) : mDB( _db->getDB ()->mDB )
-//{
-
-//}
-
-
-
-//MongoCore::DB::~DB()
-//{
-//    std::cout << "-DB Destructor- Delete Client: " << mConstructWithNewClient << std::endl;
-//    if( mConstructWithNewClient )
-//    {
-//        std::cout << "Delete DB Connection, CurrentConnection Count: " <<  --DBConnectionCount << std::endl;
-//    }
-//    std::cout << "DB Destructor End" << std::endl;
-//}
-
-//MongoCore::DB &MongoCore::DB::operator=(const DB &otherDB)
-//{
-//    std::cout << "DB &DB::operator=(const DB &otherDB): " << DBConnectionCount << std::endl;
-//    mDB = otherDB.mDB;
-//    return *this;
-//}
-
-//MongoCore::DB &MongoCore::DB::operator=(MongoCore::DB &&otherDB)
-//{
-//    std::cout << "DB &DB::operator=(const DB &otherDB): " << DBConnectionCount << std::endl;
-//    mDB = otherDB.mDB;
-//    return *this;
-//}
-
-//MongoCore::DB &MongoCore::DB::operator=(mongocxx::database *_db)
-//{
-//    std::cout << "DB &DB::operator=(const DB &otherDB): " << DBConnectionCount << std::endl;
-//    mDB = _db;
-//    return *this;
-//}
-
 void MongoCore::DB::errorOccured(const std::string &errorText)
 {
-
 }
-
-
-
-
-
-
 
 mongocxx::database *MongoCore::DB::db()
 {
@@ -108,7 +38,6 @@ mongocxx::database *MongoCore::DB::db()
 std::string MongoCore::DB::downloadFile(const std::string &fileOid, bool forceFilename)
 {
 
-
     std::string file__Name{""};
     bool fileDownloadedBefore=true;
 
@@ -117,7 +46,8 @@ std::string MongoCore::DB::downloadFile(const std::string &fileOid, bool forceFi
     try {
         filter.append(bsoncxx::builder::basic::kvp("_id",bsoncxx::oid{fileOid}));
     } catch (bsoncxx::exception &e) {
-        std::cout << "\nLOG: " << e.what() << "\n";
+        setLastError(e.what());
+        return "";
     }
 
     auto val = this->mDB->collection("fs.files").find_one(filter.view());
@@ -136,10 +66,7 @@ std::string MongoCore::DB::downloadFile(const std::string &fileOid, bool forceFi
                 file__Name = "tempfile/"+fileOid+file_info.extension().string();
             }
 
-            if( std::filesystem::exists(file__Name) ){
-                std::cout << "\nFile Exist: " << file__Name << "\n";
-            }else{
-                std::cout << "\nFile NOT Exist: " << file__Name << "\n";
+            if( ! std::filesystem::exists(file__Name) ){
                 fileDownloadedBefore = false;
             }
         }
@@ -151,7 +78,6 @@ std::string MongoCore::DB::downloadFile(const std::string &fileOid, bool forceFi
         return file__Name;
     }
 
-
     auto bucket = this->db ()->gridfs_bucket ();
 
     auto doc = bsoncxx::builder::basic::document{};
@@ -160,11 +86,9 @@ std::string MongoCore::DB::downloadFile(const std::string &fileOid, bool forceFi
         doc.append(bsoncxx::builder::basic::kvp("key",bsoncxx::oid{fileOid}));
     } catch (bsoncxx::exception& e) {
         std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what() ;
-        this->setLastError (str.c_str ());
-        return "NULL";
+        setLastError( str.c_str ());
+        return "";
     }
-
-
 
     mongocxx::gridfs::downloader downloader;
     try {
@@ -263,10 +187,7 @@ std::string MongoCore::DB::downloadFileWeb(const std::string &fileOid, bool forc
                 file__Name = "tempfile/"+fileOid+file_info.extension().string();
             }
 
-            if( std::filesystem::exists(std::string("docroot/")+file__Name) ){
-                std::cout << "\nFile Exist: " << file__Name << "\n";
-            }else{
-                std::cout << "\nFile NOT Exist: " << file__Name << "\n";
+            if( ! std::filesystem::exists(std::string("docroot/")+file__Name) ){
                 fileDownloadedBefore = false;
             }
         }
@@ -366,7 +287,8 @@ std::string MongoCore::DB::downloadFileWeb(const std::string &fileOid, const std
     try {
         filter.append(bsoncxx::builder::basic::kvp("_id",bsoncxx::oid{fileOid}));
     } catch (bsoncxx::exception &e) {
-        std::cout << "\nLOG: " << e.what() << "\n";
+        setLastError(e.what());
+        return "";
     }
 
     auto val = this->mDB->collection("fs.files").find_one(filter.view());
@@ -385,10 +307,7 @@ std::string MongoCore::DB::downloadFileWeb(const std::string &fileOid, const std
                 file__Name = "tempfile/"+fileOid+file_info.extension().string();
             }
 
-            if( std::filesystem::exists(docroot+"/"+file__Name) ){
-                std::cout << "\nFile Exist: " << file__Name << "\n";
-            }else{
-                std::cout << "\nFile NOT Exist: " << file__Name << "\n";
+            if( ! std::filesystem::exists(docroot+"/"+file__Name) ){
                 fileDownloadedBefore = false;
             }
         }
@@ -412,8 +331,6 @@ std::string MongoCore::DB::downloadFileWeb(const std::string &fileOid, const std
         return "";
     }
 
-
-
     mongocxx::gridfs::downloader downloader;
     try {
         auto roid = bsoncxx::types::bson_value::value(doc.view()["key"].get_oid());
@@ -424,15 +341,11 @@ std::string MongoCore::DB::downloadFileWeb(const std::string &fileOid, const std
         return "img/404-header.png";
     }
 
-
     auto file_length = downloader.file_length();
-
 
     std::filesystem::path info( downloader.files_document()["filename"].get_string().value.data ());
 
-
     std::string fullFilename;
-
 
     if( !std::filesystem::exists(docroot+"/tempfile") ){
         if( !std::filesystem::create_directory(docroot+"/tempfile") ){
@@ -442,14 +355,12 @@ std::string MongoCore::DB::downloadFileWeb(const std::string &fileOid, const std
         }
     }
 
-
     if( forceFilename )
     {
         fullFilename = std::string("tempfile/")+downloader.files_document()["filename"].get_string().value.data ();
     }else{
         fullFilename = std::string("tempfile/")  +downloader.files_document()["_id"].get_oid().value.to_string() + info.extension().string();
     }
-
 
     if( std::filesystem::exists(docroot+"/"+fullFilename) )
     {
@@ -513,38 +424,6 @@ bsoncxx::types::bson_value::value MongoCore::DB::uploadfile(const std::string &f
     }
 }
 
-//bsoncxx::types::bson_value::value MongoCore::DB::uploadfile(const std::string filepath) const
-//{
-//    auto bucket = this->db ()->gridfs_bucket ();
-//    std::ifstream file;
-//    file.open(filepath,std::ios::out | std::ios::app | std::ios:: binary );
-//    if( file.is_open() ){
-
-//        file.seekg (0, file.end);
-//        int length = file.tellg();
-//        file.seekg (0, file.beg);
-//        char * buffer = new char [length];
-
-//        file.read (buffer,length);
-
-//        if( file ){
-//            std::filesystem::path info( filepath );
-//            auto uploader = bucket.open_upload_stream(info.filename().string());
-
-//        }else{
-//            this->setLastError ("all bytes read failed");
-
-//        }
-
-//        file.close();
-
-//        delete[] buffer;
-//    }else{
-//        std::string str = "Error Can Not Open File: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + filepath ;
-//        this->setLastError (str.c_str ());
-//        return bsoncxx::types::bson_value::value(nullptr);
-//    }
-//}
 
 bool MongoCore::DB::deleteGridFS(const std::string &fileOid)
 {

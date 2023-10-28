@@ -90,7 +90,7 @@ public:
                     arr.append (item.get_value ());
                 } catch (bsoncxx::exception &e) {
                     std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-                    errorOccured (str);
+                    error (str);
                 }
             }
         }
@@ -99,14 +99,14 @@ public:
             arr.append (value);
         } catch (bsoncxx::exception &e) {
             std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-            errorOccured (str);
+            error (str);
         }
 
         try {
             mDoc.append (kvp(key,arr));
         } catch (bsoncxx::exception &e) {
             std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-            errorOccured (str);
+            error (str);
         }
     }
 
@@ -126,7 +126,7 @@ public:
             mDoc.append (bsoncxx::builder::basic::kvp(key,value));
         } catch (bsoncxx::exception &e) {
             std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-            errorOccured (str);
+            error (str);
         }
         return *this;
     }
@@ -134,9 +134,13 @@ public:
     template<>
     Item& append( const std::string_view &key ,const Item &value );
 
+    std::string errorStr() const;
+
 private:
     bsoncxx::builder::basic::document mDoc;
     std::string mCollection;
+    void error( const std::string &errorStr );
+    std::string m_errorStr;
 };
 
 

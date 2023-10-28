@@ -73,7 +73,7 @@ std::optional<bsoncxx::types::bson_value::value> MongoCore::Item::element(const 
         return bsoncxx::types::bson_value::value(mDoc.view ()[key].get_value ());
     } catch (bsoncxx::exception &e) {
         std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what() + " Key: " + key;
-        const_cast<MongoCore::Item*>(this)->errorOccured (str);
+        const_cast<MongoCore::Item*>(this)->error (str);
         return std::nullopt;;
     }
 }
@@ -85,7 +85,7 @@ std::optional<bsoncxx::oid> MongoCore::Item::oid() const
         return this->view ()["_id"].get_oid ().value;
     } catch (bsoncxx::exception &e) {
         std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-        const_cast<MongoCore::Item*>(this)->errorOccured (str);
+        const_cast<MongoCore::Item*>(this)->error (str);
         return std::nullopt;
     }
 }
@@ -98,7 +98,7 @@ std::optional<bsoncxx::types::bson_value::value> MongoCore::Item::element(std::s
         return std::make_optional(bsoncxx::types::bson_value::value(mDoc.view ()[key].get_value ()));
     } catch (bsoncxx::exception &e) {
         std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what() + " Key: " + key;
-        errorOccured (str);
+        error (str);
         return std::nullopt;
     }
 }
@@ -109,7 +109,7 @@ std::optional<bsoncxx::oid> MongoCore::Item::oid()
         return this->view ()["_id"].get_oid ().value;
     } catch (bsoncxx::exception &e) {
         std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-        errorOccured (str);
+        error (str);
         return std::nullopt;
     }
 }
@@ -128,7 +128,7 @@ std::optional<bsoncxx::builder::basic::document> MongoCore::Item::ItemFilter()
             doc.append (bsoncxx::builder::basic::kvp("_id",oid.value ()));
         } catch (bsoncxx::exception &e) {
             std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-            errorOccured (str);
+            error (str);
             return std::nullopt;
         }
         return std::move(doc);
@@ -146,9 +146,7 @@ std::optional<std::time_t> MongoCore::Item::getTime() const
     {
         return std::nullopt;
     }
-
     return _oid.value ().get_time_t ();
-
 }
 
 
@@ -242,7 +240,7 @@ void MongoCore::Item::removeElement(const std::string &key)
                 tempDoc.append( kvp( item.key () , item.get_value () ) );
             } catch (bsoncxx::exception &e) {
                 std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-                errorOccured (str);
+                error (str);
             }
         }
     }
@@ -265,7 +263,7 @@ void MongoCore::Item::removeElement(const std::string_view &key)
                 tempDoc.append( kvp( item.key () , item.get_value () ) );
             } catch (bsoncxx::exception &e) {
                 std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-                errorOccured (str);
+                error (str);
             }
         }
     }
@@ -292,7 +290,7 @@ void MongoCore::Item::pushArray(std::string key, const Item &value)
                 arr.append (item.get_value ());
             } catch (bsoncxx::exception &e) {
                 std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-                errorOccured (str);
+                error (str);
             }
         }
     }
@@ -301,14 +299,14 @@ void MongoCore::Item::pushArray(std::string key, const Item &value)
         arr.append (value.view ());
     } catch (bsoncxx::exception &e) {
         std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-        errorOccured (str);
+        error (str);
     }
 
     try {
         mDoc.append (kvp(key,arr));
     } catch (bsoncxx::exception &e) {
         std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-        errorOccured (str);
+        error (str);
     }
 }
 
@@ -328,7 +326,7 @@ void MongoCore::Item::pullArray(const std::string &key, const bsoncxx::types::bs
                     arr.append (item.get_value ());
                 } catch (bsoncxx::exception &e) {
                     std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-                    errorOccured (str);
+                    error (str);
                 }
             }
         }
@@ -338,7 +336,7 @@ void MongoCore::Item::pullArray(const std::string &key, const bsoncxx::types::bs
         mDoc.append (kvp(key,arr));
     } catch (bsoncxx::exception &e) {
         std::string str = "ERROR: " + std::to_string(__LINE__) + " " + __FUNCTION__ + " " + e.what();
-        errorOccured (str);
+        error (str);
     }
 }
 
@@ -516,3 +514,18 @@ MongoCore::Item &MongoCore::Item::append(const std::string_view &key, const Item
 //template MongoCore::Item &MongoCore::Item::append<std::string>(const std::string_view& ,const std::string&);
 
 
+
+
+namespace MongoCore {
+std::string Item::errorStr() const
+{
+    return m_errorStr;
+}
+
+void Item::error(const std::string &errorStr)
+{
+    m_errorStr = errorStr;
+    errorOccured(m_errorStr);
+}
+
+}
