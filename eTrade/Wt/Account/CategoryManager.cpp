@@ -75,7 +75,7 @@ void Account::CategoryManager::initHeader()
     auto m_hlayout = header()->setLayout(std::make_unique<WHBoxLayout>());
 
     m_hlayout->addStretch(1);
-    m_hlayout->addWidget(std::make_unique<WText>(eCore::tr("<h3>Kategoriler</h3>")));
+    m_hlayout->addWidget(std::make_unique<WText>(eCore::tr("<h4>Kategoriler</h4>")));
     m_hlayout->addStretch(1);
 
     auto m_addNewBtn = m_hlayout->addWidget(std::make_unique<WPushButton>(eCore::tr("Yeni Ekle+")));
@@ -107,4 +107,52 @@ void Account::CategoryManager::addNewCategory()
     });
 
     mDialog->show();
+}
+
+void Account::CategoryManager::changeCategoryName()
+{
+
+}
+
+
+
+Account::CategoryModel::CategoryModel(const std::vector<eCore::Category> &mlist)
+    :m_categoryList(mlist)
+{
+
+}
+
+const eCore::Category &Account::CategoryModel::at(const int index) const
+{
+    return m_categoryList.at(index);
+}
+
+int Account::CategoryModel::rowCount(const Wt::WModelIndex &parent) const
+{
+    return m_categoryList.size();
+}
+
+cpp17::any Account::CategoryModel::data(const Wt::WModelIndex &index, Wt::ItemDataRole role) const
+{
+    if( index.row() < 0 || index.row() >= m_categoryList.size() )
+        return cpp17::any();
+
+
+    if( role == ItemDataRole::Display ) {
+        auto item = m_categoryList.at(index.row());
+        auto val = item.value(eCore::Category::Key::text);
+        if( ! val )
+            return cpp17::any();
+        return val.value().view().get_string().value.data();
+    }
+
+    if( role == ItemDataRole::User+1 ) {
+        auto item = m_categoryList.at(index.row());
+        auto val = item.oid();
+        if( ! val )
+            return cpp17::any();
+        return val.value().to_string();
+    }
+
+    return cpp17::any();
 }
