@@ -18,6 +18,11 @@ private:
 
     virtual void initHeader() override;
 
+
+
+    // ProductManager interface
+public:
+    virtual void addProduct(const eCore::Product &item) override;
 };
 
 } // namespace Body

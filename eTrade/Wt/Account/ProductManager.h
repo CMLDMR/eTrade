@@ -36,6 +36,8 @@ private:
     void addNewProduct();
     eCore::CategoryManager* m_categoryManager;
 
+    void changeProduct( const eCore::Product &product );
+
 
 
 

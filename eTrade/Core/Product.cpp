@@ -1,6 +1,5 @@
 #include "Product.h"
 
-#include <chrono>
 
 namespace eCore {
 
@@ -22,10 +21,6 @@ ProductManager::ProductManager(User::UserItem *mUser)
 
 }
 
-long long ProductManager::secondsSinceEpoch()
-{
-    return std::chrono::system_clock::now().time_since_epoch().count();
-}
 
 User::UserItem *ProductManager::User() const
 {
