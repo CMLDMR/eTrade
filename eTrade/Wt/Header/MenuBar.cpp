@@ -3,6 +3,7 @@
 #include "Wt/WHBoxLayout.h"
 
 #include <Wt/WText.h>
+#include <Wt/Widget/Text.h>
 
 using namespace Wt;
 
@@ -10,9 +11,7 @@ namespace Header {
 
 MenuBar::MenuBar()
 {
-
     init();
-
 }
 
 void MenuBar::init()
@@ -46,7 +45,15 @@ void MenuBar::init()
     };
 
     //TODO: define signal per menu
-    m_Layout->addWidget(std::move(fMenu("Home")));
+    auto m_homeMenuItem = fMenu(eCore::tr("Ana Sayfa"));
+    m_homeMenuItem->decorationStyle().setCursor(Cursor::PointingHand);
+    m_homeMenuItem->clicked().connect([=](){
+        m_clickHome.emit(Wt::NoClass());
+    });
+    m_Layout->addWidget(std::move(m_homeMenuItem));
+
+
+
     m_Layout->addWidget(std::move(fMenu("About Us")));
     m_Layout->addWidget(std::move(fMenu("Products")));
     m_Layout->addWidget(std::move(fMenu("Pages")));
@@ -60,6 +67,7 @@ void MenuBar::init()
 
 
     auto accoutContainer = fMenu("Account");
+    accoutContainer->decorationStyle().setCursor(Cursor::PointingHand);
     m_accoutContainer = accoutContainer.get();
     m_Layout->addWidget(std::move(accoutContainer));
 
@@ -70,6 +78,11 @@ void MenuBar::init()
 Wt::WContainerWidget *MenuBar::accoutContainer() const
 {
     return m_accoutContainer;
+}
+
+Wt::Signal<NoClass> &MenuBar::clickHome()
+{
+    return m_clickHome;
 }
 
 } // namespace Header

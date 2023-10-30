@@ -1,7 +1,6 @@
 #include "Widget.h"
 #include "Bootstrap/Bootstrap5ThemaKeys.h"
 #include "Bootstrap/inlinestyle.h"
-#include "MenuBar.h"
 
 #include <memory.h>
 
@@ -30,8 +29,8 @@ Wt::Signal<NoClass> &Widget::clickAccount()
 void Widget::init()
 {
     m_HeaderList = List();
-    addStyleClass(Bootstrap::Grid::container_fluid);
-    setAttributeValue(Style::style,Style::background::color::color(Style::color::Grey::LightGray));
+    addStyleClass( Bootstrap::Grid::container_fluid );
+    setAttributeValue( Style::style , Style::background::color::color( Style::color::Grey::LightGray ) );
 
     m_AddressContainer = addNew<AddressContainer>();
     m_AddressContainer->addStyleClass(Bootstrap::Grid::container_fluid);
@@ -48,7 +47,12 @@ void Widget::init()
 
 }
 
-void Widget::errorOccured(const std::string &errorText)
+MenuBar *Widget::MenuBarWidget() const
+{
+    return m_MenuBar;
+}
+
+void Widget::errorOccured( const std::string &errorText )
 {
 
 }

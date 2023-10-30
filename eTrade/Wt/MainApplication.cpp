@@ -9,6 +9,7 @@
 #include "Header/Widget.h"
 
 #include "Body/Body.h"
+
 #include "Footer/Footer.h"
 #include "Wt/Account/Panel.h"
 
@@ -48,6 +49,10 @@ void MainApplication::init()
     m_headerContainer->clickAccount().connect([=, this](){
         body->clear();
         body->addNew<Account::Panel>(m_db);
+    });
+
+    m_headerContainer->MenuBarWidget()->clickHome().connect([=](){
+        body->init();
     });
 
 

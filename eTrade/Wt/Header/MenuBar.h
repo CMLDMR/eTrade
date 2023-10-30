@@ -2,6 +2,7 @@
 #define HEADER_MENUBAR_H
 
 #include <Wt/WContainerWidget.h>
+#include <Wt/WSignal.h>
 
 namespace Wt {
 class WHBoxLayout;
@@ -16,6 +17,13 @@ public:
 
 
     Wt::WContainerWidget *accoutContainer() const;
+
+    //Signals
+public:
+    Wt::Signal<Wt::NoClass> &clickHome();
+
+private:
+    Wt::Signal<Wt::NoClass> m_clickHome;
 
 private:
     void init();
