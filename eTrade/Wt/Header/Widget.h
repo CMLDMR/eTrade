@@ -4,6 +4,7 @@
 #include <Wt/WAnchor.h>
 #include <Wt/WContainerWidget.h>
 #include "Core/MainHeaderInfo.h"
+#include "MenuBar.h"
 
 
 namespace Wt {
@@ -43,6 +44,7 @@ public:
     // MainHeaderInfoManager interface
 public:
     virtual void onList(const std::vector<eCore::HeaderInfo::MainHeaderInfo> &mlist) override;
+    MenuBar *MenuBarWidget() const;
 };
 
 

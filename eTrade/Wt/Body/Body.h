@@ -13,6 +13,11 @@ class Body : public Wt::WContainerWidget
 {
 public:
     Body(eCore::User::UserItem *mUser );
+
+    void init();
+
+private:
+    eCore::User::UserItem *m_User;
 };
 
 
