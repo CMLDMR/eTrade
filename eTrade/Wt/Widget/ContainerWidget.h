@@ -18,6 +18,8 @@ public:
     Wt::WContainerWidget *footer();
 
     std::pair<Wt::WDialog*,Wt::WPushButton*> createDialog( const std::string &title , const std::string &acceptBtnName = "Tamam");
+    Wt::WDialog* createInfoDialog( const std::string &title );
+
     void removeDialog( Wt::WDialog* mDialog );
     std::pair<Wt::WDialog*,Wt::WPushButton*> askDialog( const std::string &message );
 

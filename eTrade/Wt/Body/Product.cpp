@@ -132,6 +132,16 @@ void Body::Product::addProduct(const eCore::Product &item)
 
     auto m_viewDetailsBtn = m_btnController->addNew<WPushButton>(eCore::tr("Detay"));
     m_viewDetailsBtn->addStyleClass(Bootstrap::Grid::full(6)+Bootstrap::Components::Buttons::Outline::Danger+Bootstrap::Components::Buttons::Size::Small);
+    m_viewDetailsBtn->clicked().connect([=](){
+        auto mDialog  = createInfoDialog("Ürün Detayı");
+
+        auto m_context = mDialog->contents()->addNew<WText>("");
+        auto m_explainValue = item.value(eCore::Product::Key::explainHtml);
+        if ( m_explainValue ) {
+            m_context->setText( m_explainValue.value().view().get_string().value.data() );
+        }
+        mDialog->show();
+    });
 
     auto m_addToCartbtn = m_btnController->addNew<WPushButton>(eCore::tr("Sepete Ekle"));
     m_addToCartbtn->addStyleClass(Bootstrap::Grid::full(6)+Bootstrap::Components::Buttons::Outline::Success+Bootstrap::Components::Buttons::Size::Small);

@@ -10,6 +10,7 @@
 #include <Wt/WLineEdit.h>
 #include <Wt/WDoubleSpinBox.h>
 #include <Wt/WDateTime.h>
+#include <Wt/WTextEdit.h>
 
 #include <Bootstrap/Bootstrap5ThemaKeys.h>
 #include <Bootstrap/inlinestyle.h>
@@ -93,14 +94,20 @@ void ProductManager::addProduct(const eCore::Product &item)
     auto m_btnController = m_vLayout->addWidget(std::make_unique<WContainerWidget>());
     m_btnController->addStyleClass(Bootstrap::Grid::row+Bootstrap::Components::Buttons::group);
 
-    auto m_viewDetailsBtn = m_btnController->addNew<WPushButton>(eCore::tr("Değiştir"));
-    m_viewDetailsBtn->addStyleClass(Bootstrap::Grid::full(6)+Bootstrap::Components::Buttons::Normal::Secondary+Bootstrap::Components::Buttons::Size::Small);
-    m_viewDetailsBtn->clicked().connect([=,this](){
+    auto m_viewChangeBtn = m_btnController->addNew<WPushButton>(eCore::tr("Değiştir"));
+    m_viewChangeBtn->addStyleClass(Bootstrap::Grid::full(4)+Bootstrap::Components::Buttons::Normal::Primary+Bootstrap::Components::Buttons::Size::Small);
+    m_viewChangeBtn->clicked().connect([=,this](){
         this->changeProduct(item);
     });
 
+    auto m_viewDetailsBtn = m_btnController->addNew<WPushButton>(eCore::tr("Detay"));
+     m_viewDetailsBtn->addStyleClass(Bootstrap::Grid::full(4)+Bootstrap::Components::Buttons::Normal::Secondary+Bootstrap::Components::Buttons::Size::Small);
+     m_viewDetailsBtn->clicked().connect([=,this](){
+         this->changeDetails(item);
+    });
+
     auto m_addToCartbtn = m_btnController->addNew<WPushButton>(eCore::tr("Sil"));
-    m_addToCartbtn->addStyleClass(Bootstrap::Grid::full(6)+Bootstrap::Components::Buttons::Normal::Secondary+Bootstrap::Components::Buttons::Size::Small);
+    m_addToCartbtn->addStyleClass(Bootstrap::Grid::full(4)+Bootstrap::Components::Buttons::Normal::Warning+Bootstrap::Components::Buttons::Size::Small);
     m_addToCartbtn->clicked().connect([=,this](){
         this->deleteProduct(item.oid().value().to_string(),item.value(eCore::Product::Key::imgOid).value().view().get_oid().value.to_string());
     });
@@ -433,4 +440,37 @@ void Account::ProductManager::deleteProduct( const std::string &oid, const std::
             showInfo( "Resim Silinemedi" , Widget::ContainerWidget::InfoType::error );
         }
     });
+}
+
+void Account::ProductManager::changeDetails(const eCore::Product &product)
+{
+    auto [ mDialog , acceptBtn ] = createDialog( "Ürüne Detay Ekle" );
+    mDialog->setWidth(WLength(750));
+
+
+    auto m_contextText = mDialog->contents()->addNew<WTextEdit>();
+    auto m_explainHtmlValue = product.value(eCore::Product::Key::explainHtml);
+    if ( m_explainHtmlValue ) {
+        m_contextText->setText(product.value(eCore::Product::Key::explainHtml).value().view().get_string().value.data());
+    }
+
+    acceptBtn->clicked().connect([=,this]{
+        using eCore::Product;
+
+        eCore::Product item;
+
+        item.setValue( Product::Key::explainHtml , m_contextText->text().toUTF8() );
+        item.setValue( Product::Key::lastUpdateTime , WDateTime::currentDateTime().toTimePoint().time_since_epoch().count() );
+        item.setOid(product.oid().value().to_string());
+
+        auto upt = UpdateItem(item);
+        if( upt ) {
+            showInfo(eCore::tr("Ürün Güncellendi."),Widget::ContainerWidget::InfoType::info);
+            wApp->removeChild(mDialog);
+            UpdateList();
+        }else{
+            showInfo(getLastError(),Widget::ContainerWidget::InfoType::error);
+        }
+    });
+    mDialog->show();
 }
